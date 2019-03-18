@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.IO;
 
-namespace DiscordBot {
+namespace KatanaBot {
 	class KatanaBot {
 		[Flags]
 		private enum RunType {
@@ -44,6 +44,7 @@ namespace DiscordBot {
 			await Client.LogoutAsync();
 			await Client.StopAsync();
 			Client.Dispose();
+			TaskCanceledExceptione e;
 		}
 		public static void Print(string message, ConsoleColor color) {
 			Console.ForegroundColor = color;

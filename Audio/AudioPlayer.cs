@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DiscordBot {
+namespace KatanaBot {
 	internal class Artist {
 		internal readonly string Name;
 		public Artist(string name) {
