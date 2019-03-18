@@ -9,8 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
-namespace KatanaBot {
+/*
+namespace KatanaBot.Audio {
 	internal class Artist {
 		internal readonly string Name;
 		public Artist(string name) {
@@ -171,7 +171,7 @@ namespace KatanaBot {
 			// EmbedBuilder builder = new EmbedBuilder() {
 			// 	Author = new EmbedAuthorBuilder { Name = "Music Bot Song Queue" },
 			// 	Footer = new EmbedFooterBuilder() { Text = "(I don't actually sing)" },
-			// 	Color = Pause ? new Color(244, 67, 54) /*Red*/ : new Color(00, 99, 33) /*Green*/
+			// 	Color = Pause ? new Color(244, 67, 54) /*Red : new Color(00, 99, 33) //Green
 			// };
 			//builder.ThumbnailUrl = "some cool url";
 
@@ -311,3 +311,4 @@ namespace KatanaBot {
 		#endregion
 	}
 }
+*/
