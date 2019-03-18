@@ -6,7 +6,7 @@ using Discord.WebSocket;
 using System.Threading;
 
 using KatanaBot.Data;
-//using KatanaBot.Events;
+using KatanaBot.Events;
 using System.Reflection;
 using System.Linq;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace KatanaBot
 {
 	public class KatanaBot
 	{
-		//private EventHandlersManager eventHandlersManager;
+		private EventHandlersManager eventHandlersManager;
 
 		public async Task MainAsync()
 		{
@@ -24,12 +24,12 @@ namespace KatanaBot
 			};
 
 			DataManager._client = new DiscordSocketClient(discordSocketConfig);
-			//eventHandlersManager = new EventHandlersManager(DataManager._client);
+			eventHandlersManager = new EventHandlersManager(DataManager._client);
 			DataManager._client.Log += Log;
-			/*try {
+			try {
 				eventHandlersManager.AddHandlers(GetAllEventsHandlers("KatanaBot.Events.EventsHandlers").ToArray());
 			}
-			catch (Exception e) { e.DisplayException("MainAsync() => EventHandlersManager.AddHandlers"); }*/
+			catch (Exception e) { e.DisplayException("MainAsync() => EventHandlersManager.AddHandlers"); }
 
 			DataManager.delay_controller = new CancellationTokenSource();
 			await DataManager._client.LoginAsync(TokenType.Bot, Utils.Token);
@@ -53,7 +53,7 @@ namespace KatanaBot
 		{
 			try {
 				Console.WriteLine("Le bot a bien été coupé.");
-				//eventHandlersManager.RemoveEvents(DataManager._client);
+				eventHandlersManager.RemoveEvents(DataManager._client);
 				DataManager._client.Log -= Log;
 				await DataManager._client.LogoutAsync();
 				await DataManager._client.StopAsync();
@@ -72,7 +72,7 @@ namespace KatanaBot
 			return Task.CompletedTask;
 		}
 
-		/*private List<IEventHandler> GetAllEventsHandlers(string nameSpace)
+		private List<IEventHandler> GetAllEventsHandlers(string nameSpace)
 		{
 			List<IEventHandler> eventsHandlers = new List<IEventHandler>();
 			
@@ -88,6 +88,6 @@ namespace KatanaBot
 				e.DisplayException(MethodBase.GetCurrentMethod().ToString());
 			}
 			return eventsHandlers;
-		}*/
+		}
 	}
 }
