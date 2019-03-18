@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 using KatanaBot.Data;
