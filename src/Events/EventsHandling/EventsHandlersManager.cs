@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 
-namespace KatanaBot.Events
+namespace EventsHandling
 {
 	class EventHandlersManager :
 		ISelfConnectedEventHandler, ISelfReadyEventHandler, ISelfDisconnectedEventHandler, ISelfJoinedGuildEventHandler, ISelfLeftGuildEventHandler, ISelfCurrentUserUpdatedEventHandler, ISelfLatencyUpdatedEventHandler,
@@ -156,7 +156,7 @@ namespace KatanaBot.Events
 			client.UserVoiceStateUpdated += User_VoiceStateUpdated;
 		}
 
-		public void RemoveEvents(DiscordSocketClient client)
+		public void Unbind(DiscordSocketClient client)
 		{
 			/*  Self */
 			client.Connected -= Self_Connected;
@@ -213,7 +213,7 @@ namespace KatanaBot.Events
 		public void AddHandlers(params IEventHandler[] handlers)
 		{
 			foreach (IEventHandler handler in handlers) {
-				if (handler is ISelfConnectedEventHandler) { this.SelfConnectedEventHandler.Add(handler as ISelfConnectedEventHandler); }
+				if (handler is ISelfConnectedEventHandler sce_handler) { this.SelfConnectedEventHandler.Add(sce_handler); }
 				if (handler is ISelfReadyEventHandler) { this.SelfReadyEventHandler.Add(handler as ISelfReadyEventHandler); }
 				if (handler is ISelfDisconnectedEventHandler) { this.SelfDisconnectedEventHandler.Add(handler as ISelfDisconnectedEventHandler); }
 				if (handler is ISelfJoinedGuildEventHandler) { this.SelfJoinedGuildEventHandler.Add(handler as ISelfJoinedGuildEventHandler); }

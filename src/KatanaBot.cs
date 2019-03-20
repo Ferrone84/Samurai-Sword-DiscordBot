@@ -1,14 +1,15 @@
-﻿using System.Net.Mime;
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Mime;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Discord;
 using Discord.WebSocket;
-using System.Threading;
 
+using EventsHandling;
 using KatanaBot.Data;
 using KatanaBot.Events;
 
@@ -32,11 +33,11 @@ namespace KatanaBot
 			try {
 				eventHandlersManager.AddHandlers(GetAllEventsHandlers("KatanaBot.Events.EventsHandlers").ToArray());
 			}
-			catch (Exception e) { e.DisplayException("MainAsync() => EventHandlersManager.AddHandlers"); }
+			catch (Exception e) { e.Display("MainAsync() => EventHandlersManager.AddHandlers"); }
 
 			TestsCards();
 
-			DataManager.delay_controller = new CancellationTokenSource();
+			DataManager.LicenceToLive = new CancellationTokenSource();
 			await DataManager._client.LoginAsync(TokenType.Bot, Utils.Token);
 			await DataManager._client.StartAsync();
 
@@ -47,7 +48,7 @@ namespace KatanaBot
 
 			// Block this task until the program is closed.
 			try {
-				await Task.Delay(-1, DataManager.delay_controller.Token);
+				await Task.Delay(-1, DataManager.LicenceToLive.Token);
 			}
 			catch (TaskCanceledException) {
 				await Deconnection();
@@ -58,7 +59,7 @@ namespace KatanaBot
 		{
 			try {
 				Console.WriteLine("Le bot a bien été coupé.");
-				eventHandlersManager.RemoveEvents(DataManager._client);
+				eventHandlersManager.Unbind(DataManager._client);
 				DataManager._client.Log -= Log;
 				await DataManager._client.LogoutAsync();
 				await DataManager._client.StopAsync();
@@ -66,7 +67,7 @@ namespace KatanaBot
 				Environment.Exit(0);
 			}
 			catch (Exception e) {
-				e.DisplayException(MethodBase.GetCurrentMethod().ToString());
+				e.Display(MethodBase.GetCurrentMethod().ToString());
 			}
 		}
 
@@ -90,7 +91,7 @@ namespace KatanaBot
 				}
 			}
 			catch (Exception e) {
-				e.DisplayException(MethodBase.GetCurrentMethod().ToString());
+				e.Display(MethodBase.GetCurrentMethod().ToString());
 			}
 			return eventsHandlers;
 		}

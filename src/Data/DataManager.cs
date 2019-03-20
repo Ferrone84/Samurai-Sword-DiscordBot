@@ -18,6 +18,6 @@ namespace KatanaBot.Data
 		}
 
 		public static DiscordSocketClient _client;
-		public static CancellationTokenSource delay_controller;
+		public static CancellationTokenSource LicenceToLive;
 	}
 }

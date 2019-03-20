@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 
-namespace KatanaBot.Events
+namespace EventsHandling
 {
 	public interface IEventHandler { }
 

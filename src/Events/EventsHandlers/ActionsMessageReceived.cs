@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Discord.WebSocket;
+using EventsHandling;
 using KatanaBot.Data;
 
 namespace KatanaBot.Events.EventsHandlers
@@ -22,7 +23,7 @@ namespace KatanaBot.Events.EventsHandlers
 				await message.Channel.SendMessageAsync("Bonsouar.");
 			}
 			catch (System.Exception e) {
-				e.DisplayException("ActionsMessageReceived");
+				e.Display("ActionsMessageReceived");
 			}
 		}
 	}
