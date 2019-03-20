@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,9 +8,8 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 
-using EventsHandling;
+using Events.EventsHandling;
 using KatanaBot.Data;
-using KatanaBot.Events;
 
 using Cards;
 
@@ -119,10 +117,10 @@ namespace KatanaBot
 			Weapon tanegashima = new Weapon("tanegashima", $"{weaponsDir}tanegashima.jpg", 5, 1);
 			Weapon wakizashi = new Weapon("wakizashi", $"{weaponsDir}wakizashi.jpg", 1, 3);
 
-			Gender ninja = new Gender("ninja", $"{gendersDir}ninja.jpg", "En équipe avec les autres ninjas.", 4, Gender.MultiplierType.two);
-			Gender ronin = new Gender("ronin", $"{gendersDir}ronin.jpg", "Tu es seul contre tous.", 4, Gender.MultiplierType.three);
-			Gender samurai = new Gender("samurai", $"{gendersDir}samurai.jpg", "En équipe avec les autres samurais et le shogun.", 4, Gender.MultiplierType.one);
-			Gender shogun = new Gender("shogun", $"{gendersDir}shogun.jpg", "En équipe avec les samurais.", 5, Gender.MultiplierType.one);
+			Role ninja = new Role("ninja", $"{gendersDir}ninja.jpg", "En équipe avec les autres ninjas.", 4, Role.MultiplierType.two);
+			Role ronin = new Role("ronin", $"{gendersDir}ronin.jpg", "Tu es seul contre tous.", 4, Role.MultiplierType.three);
+			Role samurai = new Role("samurai", $"{gendersDir}samurai.jpg", "En équipe avec les autres samurais et le shogun.", 4, Role.MultiplierType.one);
+			Role shogun = new Role("shogun", $"{gendersDir}shogun.jpg", "En équipe avec les samurais.", 5, Role.MultiplierType.one);
 
 			Character benkei = new Character("benkei", $"{charactersDir}benkei.jpg", "Les autres joueurs vous attaquent avec une difficulté augmentée de 1.", 5);
 			Character chiyome = new Character("chiyome", $"{charactersDir}chiyome.jpg", "Seules les armes peuvent vous faire perdre des points de vie.", 4);

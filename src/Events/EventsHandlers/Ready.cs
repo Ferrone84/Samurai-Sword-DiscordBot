@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using Discord;
-using EventsHandling;
+using Events.EventsHandling;
 
-namespace KatanaBot.Events.EventsHandlers
+using KatanaBot;
+
+namespace Events.EventsHandlers
 {
 	public class Ready : ISelfReadyEventHandler
 	{

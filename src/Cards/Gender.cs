@@ -1,6 +1,6 @@
 namespace Cards
 {
-	public class Gender : Card
+	public class Role : Card
 	{
 		public enum MultiplierType : short
 		{
@@ -15,7 +15,7 @@ namespace Cards
 		public short Honor { get { return honor; } protected set { honor = value; } }
 		public MultiplierType Multiplier { get { return multiplier; } protected set { multiplier = value; } }
 
-		public Gender(string name, string picture, string description, short honor, MultiplierType multiplier) : base(name, picture, description)
+		public Role(string name, string picture, string description, short honor, MultiplierType multiplier) : base(name, picture, description)
 		{
 			Honor = honor;
 			Multiplier = multiplier;

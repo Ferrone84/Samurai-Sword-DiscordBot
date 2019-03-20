@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Discord.WebSocket;
-using EventsHandling;
-using KatanaBot.Data;
+using Events.EventsHandling;
+using KatanaBot;
 
-namespace KatanaBot.Events.EventsHandlers
+namespace Events.EventsHandlers
 {
 	public class ActionsMessageReceived : IGuildMessageReceivedEventHandler, IDMMessageReceivedEventHandler
 	{

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 
-namespace EventsHandling
+namespace Events.EventsHandling
 {
 	public interface IEventHandler { }
 

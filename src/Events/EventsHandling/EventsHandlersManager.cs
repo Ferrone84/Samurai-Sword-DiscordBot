@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 
-namespace EventsHandling
+namespace Events.EventsHandling
 {
 	class EventHandlersManager :
 		ISelfConnectedEventHandler, ISelfReadyEventHandler, ISelfDisconnectedEventHandler, ISelfJoinedGuildEventHandler, ISelfLeftGuildEventHandler, ISelfCurrentUserUpdatedEventHandler, ISelfLatencyUpdatedEventHandler,
