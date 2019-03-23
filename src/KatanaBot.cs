@@ -134,7 +134,8 @@ namespace KatanaBot
 			Character nobunaga = new Character("nobunaga", $"{charactersDir}nobunaga.jpg", "Durant votre tour, vous pouvez perdre 1 point de vie (sauf votre dernier) pour piocher 1 carte.", 5);
 			Character tomoe = new Character("tomoe", $"{charactersDir}tomoe.jpg", "Chaque fois qu'une de vos armes blesse un joueur, piochez 1 carte.", 5);
 			Character ushiwaka = new Character("ushiwaka", $"{charactersDir}ushiwaka.jpg", "Chaque fois que vous perdez 1 point de vie à cause d'une arme, piochez 1 carte.", 4);
-
+			Character rikyu = new Character("rikyu", $"{charactersDir}rikyu.jpg", "Lorsque la pioche est épuisée, vous ne perdez pas de point d'honneur.", 4);
+			
 			Buff armure = new Buff("armure", $"{buffsDir}armure.jpg", "Les autres joueurs vous attaquent avec une difficulté augmentée de 1.", Buff.Type.Armor);
 			Buff attaque_rapide = new Buff("attaque rapide", $"{buffsDir}attaque_rapide.jpg", "Vos armes causent 1 dégâts supplémentaire.", Buff.Type.Damage);
 			Buff concentration = new Buff("concentration", $"{buffsDir}concentration.jpg", "Vous pouvez jouer 1 arme de plus par tour.", Buff.Type.WeaponNumber);
