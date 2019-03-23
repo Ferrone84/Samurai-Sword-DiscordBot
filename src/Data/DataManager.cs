@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-
-using Discord;
 using Discord.WebSocket;
 using System.Threading;
 
@@ -11,6 +8,13 @@ namespace KatanaBot.Data
 		public static string RESOURCES_DIR = @"resources/";
 		public static string BIN_DIR = $@"{RESOURCES_DIR}binaries/";
 		public static string TEXT_DIR = $@"{RESOURCES_DIR}text/";
+
+		public static string CARDS_DIR = "resources/cards/";
+		public static string WEAPONS_DIR = $"{CARDS_DIR}weapons/";
+		public static string GENDERS_DIR = $"{CARDS_DIR}genders/";
+		public static string CHARACTERS_DIR = $"{CARDS_DIR}characters/";
+		public static string BUFFS_DIR = $"{CARDS_DIR}buffs/";
+		public static string SPELLS_DIR = $"{CARDS_DIR}spells/";
 
 		public struct Text
 		{

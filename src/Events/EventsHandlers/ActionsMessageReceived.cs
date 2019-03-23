@@ -5,20 +5,12 @@ using KatanaBot;
 
 namespace Events.EventsHandlers
 {
-	public class ActionsMessageReceived : IGuildMessageReceivedEventHandler, IDMMessageReceivedEventHandler
+	public class ActionsMessageReceived : IGuildMessageReceivedEventHandler
 	{
-		public async Task DM_Message_Received(SocketUserMessage message)
-		{
-			await ActionsHandler(message);
-		}
-
 		public async Task Guild_Message_Received(SocketUserMessage message)
 		{
-			await ActionsHandler(message);
-		}
+			if (message.Channel.Id != 559060763864596495) { return; } //tests-channel
 
-		private async Task ActionsHandler(SocketUserMessage message)
-		{
 			try {
 				await message.Channel.SendMessageAsync("Bonsouar.");
 			}

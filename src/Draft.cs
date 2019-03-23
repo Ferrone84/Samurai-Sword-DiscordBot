@@ -71,7 +71,7 @@ namespace Games {
 		 */
 	}
 
-
+	/*
 	---- Partie Cartes ----
 	Types de cartes :
 	Une carte ça a un nom, une description si possible, un type et des effets (si on peut rendre ça générique, c'est génial)
@@ -112,4 +112,5 @@ namespace Games {
 
 	de même on peut avoir les jeux à plateau commun (Poker à 2 cartes par exemple, et aussi katana avec le bushido en fait...)
 	et deck commun (Katana)
+	*/
 }
