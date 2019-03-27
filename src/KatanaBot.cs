@@ -25,19 +25,18 @@ namespace KatanaBot
 				MessageCacheSize = 100
 			};
 
-			DataManager._client = new DiscordSocketClient(discordSocketConfig);
-			eventHandlersManager = new EventHandlersManager(DataManager._client);
-			DataManager._client.Log += Log;
+			DataManager.Client = new DiscordSocketClient(discordSocketConfig);
+			eventHandlersManager = new EventHandlersManager(DataManager.Client);
+			DataManager.Client.Log += Log;
 			try {
 				eventHandlersManager.AddHandlers(GetAllEventsHandlers("Events.EventsHandlers").ToArray());
 			}
 			catch (Exception e) { e.Display("MainAsync() => EventHandlersManager.AddHandlers"); }
-
-			TestsCards();
-
+			new GameRender();
+			return;
 			DataManager.LicenceToLive = new CancellationTokenSource();
-			await DataManager._client.LoginAsync(TokenType.Bot, Utils.Token);
-			await DataManager._client.StartAsync();
+			await DataManager.Client.LoginAsync(TokenType.Bot, Utils.Token);
+			await DataManager.Client.StartAsync();
 
 			Console.CancelKeyPress += async delegate (object sender, ConsoleCancelEventArgs e) {
 				e.Cancel = true;
@@ -57,11 +56,11 @@ namespace KatanaBot
 		{
 			try {
 				Console.WriteLine("Le bot a bien été coupé.");
-				eventHandlersManager.Unbind(DataManager._client);
-				DataManager._client.Log -= Log;
-				await DataManager._client.LogoutAsync();
-				await DataManager._client.StopAsync();
-				DataManager._client.Dispose();
+				eventHandlersManager.Unbind(DataManager.Client);
+				DataManager.Client.Log -= Log;
+				await DataManager.Client.LogoutAsync();
+				await DataManager.Client.StopAsync();
+				DataManager.Client.Dispose();
 				Environment.Exit(0);
 			}
 			catch (Exception e) {
@@ -110,10 +109,10 @@ namespace KatanaBot
 			Weapon tanegashima = new Weapon("tanegashima", $"{DataManager.WEAPONS_DIR}tanegashima.jpg", 5, 1);
 			Weapon wakizashi = new Weapon("wakizashi", $"{DataManager.WEAPONS_DIR}wakizashi.jpg", 1, 3);
 
-			Role ninja = new Role("ninja", $"{DataManager.GENDERS_DIR}ninja.jpg", "En équipe avec les autres ninjas.", 4, Role.MultiplierType.two);
-			Role ronin = new Role("ronin", $"{DataManager.GENDERS_DIR}ronin.jpg", "Tu es seul contre tous.", 4, Role.MultiplierType.three);
-			Role samurai = new Role("samurai", $"{DataManager.GENDERS_DIR}samurai.jpg", "En équipe avec les autres samurais et le shogun.", 4, Role.MultiplierType.one);
-			Role shogun = new Role("shogun", $"{DataManager.GENDERS_DIR}shogun.jpg", "En équipe avec les samurais.", 5, Role.MultiplierType.one);
+			Role ninja = new Role("ninja", $"{DataManager.ROLES_DIR}ninja.jpg", "En équipe avec les autres ninjas.", 4, Role.MultiplierType.two);
+			Role ronin = new Role("ronin", $"{DataManager.ROLES_DIR}ronin.jpg", "Tu es seul contre tous.", 4, Role.MultiplierType.three);
+			Role samurai = new Role("samurai", $"{DataManager.ROLES_DIR}samurai.jpg", "En équipe avec les autres samurais et le shogun.", 4, Role.MultiplierType.one);
+			Role shogun = new Role("shogun", $"{DataManager.ROLES_DIR}shogun.jpg", "En équipe avec les samurais.", 5, Role.MultiplierType.one);
 
 			Character benkei = new Character("benkei", $"{DataManager.CHARACTERS_DIR}benkei.jpg", "Les autres joueurs vous attaquent avec une difficulté augmentée de 1.", 5);
 			Character chiyome = new Character("chiyome", $"{DataManager.CHARACTERS_DIR}chiyome.jpg", "Seules les armes peuvent vous faire perdre des points de vie.", 4);
