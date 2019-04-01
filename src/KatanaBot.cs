@@ -32,8 +32,7 @@ namespace KatanaBot
 				eventHandlersManager.AddHandlers(GetAllEventsHandlers("Events.EventsHandlers").ToArray());
 			}
 			catch (Exception e) { e.Display("MainAsync() => EventHandlersManager.AddHandlers"); }
-			new GameRender();
-			return;
+			
 			DataManager.LicenceToLive = new CancellationTokenSource();
 			await DataManager.Client.LoginAsync(TokenType.Bot, Utils.Token);
 			await DataManager.Client.StartAsync();
@@ -80,8 +79,11 @@ namespace KatanaBot
 			List<IEventHandler> eventsHandlers = new List<IEventHandler>();
 
 			try {
-				var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace.StartsWith(nameSpace));
-				foreach (var t in types) {
+				var types = Assembly.GetExecutingAssembly().GetTypes();
+				var filtered_types = types.Where(
+					t => ((t.Namespace != null) && t.Namespace.StartsWith(nameSpace))
+				);
+				foreach (var t in filtered_types) {
 					if (!t.Name.Contains("d_")) {
 						eventsHandlers.Add((t.GetConstructor(Type.EmptyTypes).Invoke(Type.EmptyTypes) as IEventHandler));
 					}

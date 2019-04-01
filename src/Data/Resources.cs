@@ -8,7 +8,7 @@ namespace KatanaBot.Data {
 	public class Resources {
 		public static string RESOURCES_PATH = @"resources/";
 		public static class Assets {
-			private static ConcurrentDictionary<string, Bitmap> Bitmaps = new ConcurrentDictionary<string, Bitmap>();
+			// private static ConcurrentDictionary<string, Bitmap> Bitmaps = new ConcurrentDictionary<string, Bitmap>();
 			private const string DEFAULT_FILEEXT = "png";
 			private static string IMG_PATH = $@"{RESOURCES_PATH}img/";
 			private static string UI_PATH = $@"{IMG_PATH}ui/";
@@ -16,9 +16,9 @@ namespace KatanaBot.Data {
 			private static Bitmap Load(string id, string path) {
 				Console.WriteLine(path);
 				Bitmap bmp;
-				if (Bitmaps.TryGetValue(id, out bmp)) {return Bitmaps[id];}
+				// if (Bitmaps.TryGetValue(id, out bmp)) {return Bitmaps[id];}
 				bmp = new Bitmap(path);
-				Bitmaps[id] = bmp;
+				// Bitmaps[id] = bmp;
 				return bmp;	
 			}
 			public static Bitmap UI(string resource, string extension=DEFAULT_FILEEXT) {

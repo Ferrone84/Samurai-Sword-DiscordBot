@@ -1,4 +1,4 @@
-namespace Games {
+namespace GamesDraft {
 	public interface IPlayer {}
 	public interface IGameState {
 			// Doit pouvoir renvoyer l'état précis
