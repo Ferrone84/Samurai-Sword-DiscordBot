@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Discord;
+using Discord.Commands;
 using Discord.Rest;
 using Discord.WebSocket;
 
@@ -22,10 +23,10 @@ namespace Events.EventsHandlers
 		public async Task Guild_Message_Received(SocketUserMessage message)
 		{
 			if (message.Channel.Id != 559060763864596495) { return; } //tests-channel
-
+			int pos = 0;
+			if (!message.HasMentionPrefix(DataManager.Client.CurrentUser, ref pos)) {}
 			try {
 				//bon foudra ajouter ton système de commande pour rendre ça automatique
-
 				//ce bloc sera remplacé par ton truc qui vérifie la mention
 				bool noice = false;
 				foreach (SocketUser user in message.MentionedUsers) {
@@ -37,7 +38,7 @@ namespace Events.EventsHandlers
 
 				//ce bloc sera remplacé par l'Action qui correspond
 				if (noice) {
-					Regex regex = new Regex("k+a+t+a+n+a+");
+					Regex regex = new Regex(@"k+a+t+a+n+a+");
 					if (regex.Match(message.Content.ToLower()).Success) {
 						IUserMessage messageSent = await message.Channel.SendMessageAsync("Lancement du jeu Katana ! Sélectionne un nombre de joueurs.");
 						await messageSent.AddReactionsAsync(new IEmote[] { EmoteManager.Three, EmoteManager.Four, EmoteManager.Five, EmoteManager.Six, EmoteManager.Seven });
@@ -90,7 +91,6 @@ namespace Events.EventsHandlers
 			catch (System.Exception e) {
 				e.Display(MethodBase.GetCurrentMethod().ToString());
 			}
-
 		Bonsouar:
 			try {
 				if (message.Content.ToLower() != "!d") { return; }
@@ -108,6 +108,23 @@ namespace Events.EventsHandlers
 
 			//donc ici bien faire gaffe à vérif que le message est un message stocké comme lanceur de partie et que c'est le même user
 			int playerNumber = 0;
+			/* Methode préférée */
+			if (reaction.Emote is Emoji emoji) {
+				string number = EmoteManager.TextEmojis.WhichOf(emoji, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+				if (number != null) {
+					int i = number[0] - '0';
+					playerNumber = i;
+					if (i > 7 || i < 3) {
+						await message.Channel.SendMessageAsync($"Ce jeu accepte de 3 à 7 joueurs uniquement.");
+					}
+					else {
+						await message.Channel.SendMessageAsync($"Lancement de la partie avec {playerNumber} joueurs.");
+						await message.DeleteAsync();
+					}
+				}
+				else {await message.Channel.SendMessageAsync($"Ce n'est pas un nombre!");}
+				return;
+			}
 			if (reaction.Emote.Equals(EmoteManager.Three)) {
 				playerNumber = 3;
 			}
