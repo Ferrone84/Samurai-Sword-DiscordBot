@@ -1,5 +1,8 @@
-using Discord.WebSocket;
+using System.Collections.Generic;
 using System.Threading;
+
+using Discord;
+using Discord.WebSocket;
 
 namespace KatanaBot.Data
 {
@@ -23,5 +26,7 @@ namespace KatanaBot.Data
 
 		public static DiscordSocketClient Client;
 		public static CancellationTokenSource LicenceToLive;
+
+		public static List<IDeletable> ElementsToDelete = new List<IDeletable>();
 	}
 }
