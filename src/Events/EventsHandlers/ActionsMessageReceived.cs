@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +12,8 @@ using Discord.Commands;
 using Discord.Rest;
 using Discord.WebSocket;
 
+using Cards;
+using CollectionExtensions;
 using Events.EventsHandling;
 using KatanaBot;
 using KatanaBot.Data;
@@ -42,7 +45,6 @@ namespace Events.EventsHandlers
 					if (regex.Match(message.Content.ToLower()).Success) {
 						IUserMessage messageSent = await message.Channel.SendMessageAsync("Lancement du jeu Katana ! Sélectionne un nombre de joueurs.");
 						await messageSent.AddReactionsAsync(EmoteManager.TextEmojis.GetEmojis("3","4","5","6","7"));
-							// new IEmote[] { EmoteManager.Three, EmoteManager.Four, EmoteManager.Five, EmoteManager.Six, EmoteManager.Seven });
 						//plus qu'à stocker le message où il faut pour save l'objet
 						//et le user
 						//pour l'instant je le fais en sale
@@ -59,35 +61,56 @@ namespace Events.EventsHandlers
 
 				var guild = (message.Channel as SocketGuildChannel).Guild;
 
-				RestCategoryChannel categorieChannel = await guild.CreateCategoryChannelAsync("Katana");
-				RestTextChannel gameChannel = await guild.CreateTextChannelAsync("Game", x =>
+				//"en admettant qu'on possède déjà la collection des users"
+				List<IUser> users = new List<IUser>() {guild.GetUser(293780484822138881), guild.GetUser(150338863234154496), guild.GetUser(342330092032098304)};
+
+				//setup du deck et des cartes
+				CardManager cardManager = new CardManager(users.Count);
+				List<Card> deck = cardManager.Deck.Shuffle().ToList();
+				List<Card> roles = cardManager.Roles.Shuffle().ToList();
+				List<Card> characters = cardManager.Characters.Shuffle().Take(users.Count).ToList();
+
+				RestCategoryChannel channelsCategorie = await guild.CreateCategoryChannelAsync("Katana");
+				RestTextChannel gameChannel = await guild.CreateTextChannelAsync("Jeu", x =>
 				{
-					x.CategoryId = categorieChannel.Id;
+					x.CategoryId = channelsCategorie.Id;
 					x.Topic = "Affiche le jeu avec les joueurs.";
 				});
 
-				List<IUser> users = new List<IUser>() {message.Author, message.Author, message.Author}; //en admettant qu'on le sache déjà
-				foreach ((IUser user, int i) in users.Select((value, i) => (value, i))) {
-					RestTextChannel channel = await guild.CreateTextChannelAsync($"cards-player-{i+1}", x => 
+				foreach ((IUser user, int i) in users.Shuffle().Select((value, i) => (value, i))) {
+
+					Card role = roles[i];
+					Card character = characters[i];
+					//alors ici j'hésite entre un Player qui serait de la forme => Player(IUser, role, character) : IPlayer
+					//ou un Tuple<IUser, Player> avec un Player(role, character) : Iplayer
+					//à toi de décider, en tout cas la classe player est obligée d'avoir "role" et "character" pour savoir les HP et l'honneur
+					//il faudra que Player ait aussi la liste des cartes du joueur
+
+					RestTextChannel channel = await guild.CreateTextChannelAsync($"cartes-{character.Name}", x => 
 					{
-						x.CategoryId = categorieChannel.Id;
+						x.CategoryId = channelsCategorie.Id;
 					});
 
-					RestRole userRole = await guild.CreateRoleAsync($"Player#{user.Id}"); //on peut remplacer par le nom du perso
+					RestRole discordRole = await guild.CreateRoleAsync($"{character.Name}");
 					OverwritePermissions userPermissions = new OverwritePermissions(viewChannel : PermValue.Allow);
 					OverwritePermissions everyonePermissions = new OverwritePermissions(viewChannel : PermValue.Deny);
 
-					await (user as SocketGuildUser).AddRoleAsync(userRole);
+					await (user as SocketGuildUser).AddRoleAsync(discordRole);
 					await channel.AddPermissionOverwriteAsync(guild.EveryoneRole, everyonePermissions);
-					await channel.AddPermissionOverwriteAsync(userRole, userPermissions);
+					await channel.AddPermissionOverwriteAsync(discordRole, userPermissions);
+
+					await channel.SendMessageAsync($"Bienvenue à toi {user.Mention} ! Dans cette partie tu aura le rôle de {role.Name}.");
 
 					DataManager.ElementsToDelete.Add(channel);
-					DataManager.ElementsToDelete.Add(userRole);
+					DataManager.ElementsToDelete.Add(discordRole);
 				}
-				//jpense que faire une liste de IDeletable où on balance tout le caca (categories, channels, roles, etc) ce serait cool
-				//comme ça pour delete à la fin de la partie, on aura juste un ForEach(elem => elem.DeleteAsync());
 				DataManager.ElementsToDelete.Add(gameChannel);
-				DataManager.ElementsToDelete.Add(categorieChannel);
+				DataManager.ElementsToDelete.Add(channelsCategorie);
+
+				//maintenant il reste à distribuer les cartes en clockwise à chacun en commençant par le shogun !
+				//puis à envoyer la main de chaque joueurs dans leur channel respectif
+				//(de ce fait, faut vérif que les paths dans CardManager sont bons (ce n'est pas le cas actuellement) pck sinon si on affiche les mains des joueurs => patatra)
+				
 			}
 			catch (System.Exception e) {
 				e.Display(MethodBase.GetCurrentMethod().ToString());
@@ -109,7 +132,6 @@ namespace Events.EventsHandlers
 
 			//donc ici bien faire gaffe à vérif que le message est un message stocké comme lanceur de partie et que c'est le même user
 			int playerNumber = 0;
-			/* Methode préférée */
 			if (reaction.Emote is Emoji emoji) {
 				string number = EmoteManager.TextEmojis.WhichOf(emoji, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 				if (number != null) {
@@ -124,10 +146,8 @@ namespace Events.EventsHandlers
 					}
 				}
 				else {await message.Channel.SendMessageAsync($"Ce n'est pas un nombre!");}
-				return;
 			}
 			else {await message.Channel.SendMessageAsync($"Ce n'est pas un nombre!");}
-			return;
 		}
 	}
 }
