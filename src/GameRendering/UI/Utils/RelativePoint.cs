@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace KatanaBot.GameRendering {
+namespace GameRendering.UI {
 	public class RelativePoint {
 		private int x;
 		public int X {get => this.x;}

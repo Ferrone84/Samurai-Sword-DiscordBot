@@ -11,85 +11,8 @@ namespace KatanaBot.Utilities
 {
 	public class EmoteManager
 	{
-		public struct TextEmoji
-		{
-			public static string Nsfw = "🔞";
-			public static string CheckMark = "✅";
-			public static string CrossMark = "❎";
-			public static string Skull = "💀";
-			public static string Peach = "🍑";
-			public static string Smirk = "😏";
-			public static string Flip = "(╯°□°）╯︵ ┻━┻";
-			public static string Unflip = "┬─┬﻿ ノ( ゜-゜ノ)";
-			public static string Lenny = "( ͡° ͜ʖ ͡°)";
-			public static string InvalidEmote = "❌";
-			public static string RedCross = "❌";
-			public static string One = "\u0031\u20e3";
-			public static string Two = "\u0032\u20e3";
-			public static string Three = "\u0033\u20e3";
-			public static string Four = "\u0034\u20e3";
-			public static string Five = "\u0035\u20e3";
-			public static string Six = "\u0036\u20e3";
-			public static string Seven = "\u0037\u20e3";
-			public static string Eight = "\u0038\u20e3";
-			public static string Nine = "\u0039\u20e3";
-		}
-
-		public static IEmote Nsfw { get; } = new Emoji(TextEmoji.Nsfw);
-		public static IEmote CheckMark { get; } = new Emoji(TextEmoji.CheckMark);
-		public static IEmote CrossMark { get; } = new Emoji(TextEmoji.CrossMark);
-		public static IEmote Skull { get; } = new Emoji(TextEmoji.Skull);
-		public static IEmote Peach { get; } = new Emoji(TextEmoji.Peach);
-		public static IEmote Smirk { get; } = new Emoji(TextEmoji.Smirk);
-		public static IEmote InvalidEmote { get; } = new Emoji(TextEmoji.InvalidEmote);
-		public static IEmote One { get; } = new Emoji(TextEmoji.One);
-		public static IEmote Two { get; } = new Emoji(TextEmoji.Two);
-		public static IEmote Three { get; } = new Emoji(TextEmoji.Three);
-		public static IEmote Four { get; } = new Emoji(TextEmoji.Four);
-		public static IEmote Five { get; } = new Emoji(TextEmoji.Five);
-		public static IEmote Six { get; } = new Emoji(TextEmoji.Six);
-		public static IEmote Seven { get; } = new Emoji(TextEmoji.Seven);
-		public static IEmote Eight { get; } = new Emoji(TextEmoji.Eight);
-		public static IEmote Nine { get; } = new Emoji(TextEmoji.Nine);
-		public struct Guilds
-		{
-			public static class Zawarudo
-			{
-				private static readonly SocketGuild guild = DataManager.Client.GetGuild(309407896070782976);
-
-				public static IEmote Pepe => GetEmote(329281047730585601, guild).Result ?? InvalidEmote;
-				public static IEmote Aret => GetEmote(452977127722188811, guild).Result ?? InvalidEmote;
-				public static IEmote Mickey => GetEmote(452977414440615976, guild).Result ?? InvalidEmote;
-			}
-
-			public static class Prod
-			{
-				private static readonly SocketGuild guild = DataManager.Client.GetGuild(456443419896709123);
-
-				public static IEmote Ban => GetEmote(553719355322531851, guild).Result ?? InvalidEmote;
-				public static IEmote Minus => GetEmote(553716950979575819, guild).Result ?? InvalidEmote;
-				public static IEmote Plus => GetEmote(553716932826890250, guild).Result ?? InvalidEmote;
-				public static IEmote Edit => GetEmote(553716553502163070, guild).Result ?? InvalidEmote;
-			}
-
-			public static class Tests
-			{
-				private static readonly SocketGuild guild = DataManager.Client.GetGuild(543925483008426016);
-
-				public static IEmote Taric => GetEmote(553721390260289662, guild).Result ?? InvalidEmote;
-			}
-		}
-
-
-
-
-
-
-
-
 		public static class TextEmojis
 		{
-			public static string InvalidEmote = "❌";
 			private static ConcurrentDictionary<string, string> emojis = new ConcurrentDictionary<string, string>(
 				new Dictionary<string, string>() {
 					{"Nsfw", "🔞"},
@@ -126,6 +49,28 @@ namespace KatanaBot.Utilities
 			{
 				var name = Which(emoji);
 				return (names.Contains(name) ? name : null);
+			}
+			public static Emoji GetEmoji(string emoji_name)
+			{
+				TryGetEmoji(emoji_name, out Emoji emoji);
+				return emoji;
+			}
+			public static Emoji[] GetEmojis(params string[] emoji_names) {
+				Emoji[] emoji_objects = new Emoji[emoji_names.Length];
+				for (int i = 0 ; i < emoji_names.Length ; ++i) {
+					TryGetEmoji(emoji_names[i], out emoji_objects[i]);
+				}
+				return emoji_objects;
+			}
+			public static bool TryGetEmoji(string emoji_name, out Emoji emoji)
+			{
+				if (emojis.TryGetValue(emoji_name, out string emoji_str))
+				{
+					emoji = new Emoji(emoji_str);
+					return true;
+				}
+				emoji = null;
+				return false;
 			}
 		}
 
@@ -233,6 +178,12 @@ namespace KatanaBot.Utilities
 					return emote;
 				}
 				return null;
+			}
+			public static GuildEmote GetEmote(string emote_name)
+			{
+				GuildEmote emote = null;
+				guilds_emotes.AsParallel().FirstOrDefault(guild_entry => guild_entry.Value.TryGetEmote(emote_name, out emote));
+				return emote;
 			}
 		}
 	}

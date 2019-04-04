@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace KatanaBot.GameRendering {
+namespace GameRendering.UI {
 	public class RelativeSize {
 		private int width;
 		public int Width {get => this.width;}

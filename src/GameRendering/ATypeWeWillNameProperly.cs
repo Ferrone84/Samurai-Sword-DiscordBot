@@ -1,4 +1,6 @@
-namespace KatanaBot.GameRendering {	
+using GameRendering.UI;
+
+namespace GameRendering {
 	public class ATypeWeWillNameProperly : RelativeRectangle {
 		private readonly string[] types;
 		public string[] Types {get;}

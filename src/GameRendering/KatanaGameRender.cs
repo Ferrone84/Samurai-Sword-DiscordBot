@@ -5,21 +5,15 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 
+using GameRendering.UI;
 using KatanaBot.Data;
 using Discord;
 using Discord.WebSocket;
 using Discord.Webhook;
 
-namespace KatanaBot.GameRendering {
+namespace GameRendering {
 	public class Engine {
-		public class UIDisposition {
-			private readonly Size ProfileSize;
-			private readonly ATypeWeWillNameProperly Points;
-			private readonly ATypeWeWillNameProperly Stats;
-			public UIDisposition() {
-			}
-		}
-		private Bitmap BLANK_PROFILE = new Bitmap(176, 384); /* %FIXME% */
+		private System.Drawing.Bitmap BLANK_PROFILE = new System.Drawing.Bitmap(176, 384); /* %FIXME% */
 		public Engine() {
 			this.InitializeBlankProfile();
 			this.RenderPlayer(this.InitializePlayer(null, 0));
@@ -50,13 +44,13 @@ namespace KatanaBot.GameRendering {
 				types:new string[] {"honor", "resilience"},
 				rect:new RelativeRectangle(offset:(0, ProfileSize.Width - psize.Height/2), size:psize),
 				dynamic_offset:(i=>i * (ProfileSize.Width - psize.Width), i=>0),
-				valuerect:new RelativeRectangle(offset:(0, 0, ContentAlignment.MiddleCenter), size:(0, 56, ContentAlignment.MiddleCenter), alignment:ContentAlignment.MiddleCenter)
+				valuerect:new RelativeRectangle(offset:(0, 0, ContentAlignment.MiddleCenter), size:(0, 56, ContentAlignment.MiddleCenter))
 			);
 			var Stats = new ATypeWeWillNameProperly(
 				types:new string[] {"armor", "weapons", "damage"},
 				rect:new RelativeRectangle(offset:(24, Points.Offset.Y + Points.Size.Height), size:(48, 48)),
 				dynamic_offset:(i=>0, i=>i*48),
-				valuerect:new RelativeRectangle(offset:(40, 12, ContentAlignment.TopLeft), size:(0, 36, ContentAlignment.TopCenter), alignment:ContentAlignment.MiddleCenter)
+				valuerect:new RelativeRectangle(offset:(40, 12, ContentAlignment.TopLeft), size:(0, 36, ContentAlignment.TopCenter))
 			);
 			/*
 				On référence les séries d'icones par nom
@@ -128,16 +122,16 @@ namespace KatanaBot.GameRendering {
 			// );
 			BLANK_PROFILE.Save("blank.png", System.Drawing.Imaging.ImageFormat.Png);
 		}
-		private Bitmap InitializePlayer(object game, ulong id) {
+		private System.Drawing.Bitmap InitializePlayer(object game, ulong id) {
 			string lowercase_character = "chiyome"; /* %FIXME% dynamic argument */
 			var base_stats = new Dictionary<string, int>() {{"armor", 27}, {"weapons", 0}, {"damage", 1}}; /* %FIXME% dynamic argument */
 
-			var bmp = new Bitmap(176, 384);
+			var bmp = new System.Drawing.Bitmap(176, 384);
 			var g = Graphics.FromImage(bmp);
 			g.CompositingMode = CompositingMode.SourceOver;
 			// g.Compose(Resources.Assets.UICharacter(lowercase_character), 0, 0);
 			g.Compose(BLANK_PROFILE, 0, 0);
-			Bitmap digits = Resources.Assets.UI("DigitsBlueInWhite");
+			System.Drawing.Bitmap digits = Resources.Assets.UI("DigitsBlueInWhite");
 
 			// Iter(STAT_TYPES,
 			// 	x:(i) => 64,
@@ -148,14 +142,14 @@ namespace KatanaBot.GameRendering {
 			bmp.Save("chiyome_profile.png", System.Drawing.Imaging.ImageFormat.Png);
 			return bmp;
 		}
-		public void RenderPlayer(Bitmap base_bmp) {
+		public void RenderPlayer(System.Drawing.Bitmap base_bmp) {
 			var points = new Dictionary<string, int>() {{"honor", 3}, {"resilience", 5}}; /* %FIXME% dynamic argument */
 			var bonus_stats = new Dictionary<string, int>() {{"armor", 1}, {"weapons", 0}, {"damage", 18}}; /* %FIXME% dynamic argument */
 
-			var bmp = new Bitmap(base_bmp);
+			var bmp = new System.Drawing.Bitmap(base_bmp);
 			var g = Graphics.FromImage(bmp);
 			g.CompositingMode = CompositingMode.SourceOver;
-			Bitmap digits = Resources.Assets.UI("DigitsBlackInWhite");
+			System.Drawing.Bitmap digits = Resources.Assets.UI("DigitsBlackInWhite");
 
 			// Iter(POINT_TYPES,
 			// 	x:(i) => POINTS_SIZE/2 + (PROFILE_WIDTH - POINTS_SIZE)*i,
@@ -208,7 +202,7 @@ namespace KatanaBot.GameRendering {
 
 
 
-		public static Bitmap MakeNumber(Bitmap digits_bmp, int number, bool plus=false, bool dashzero=false) {
+		public static System.Drawing.Bitmap MakeNumber(System.Drawing.Bitmap digits_bmp, int number, bool plus=false, bool dashzero=false) {
 			/* Full of font-specific values %FIXME% MOCHE MOCHE MOCHE (mais ça marche)*/
 			/*
 				89 -> Fullframe height
@@ -232,7 +226,7 @@ namespace KatanaBot.GameRendering {
 			if (plus && (!dashzero || (number > 0))) {width += 35;}
 			else if (number == 0 && dashzero) {width = 34+2; digits.Clear();}
 
-			Bitmap bmp = new Bitmap(width, 89);
+			System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(width, 89);
 			var g = Graphics.FromImage(bmp);
 			g.CompositingMode = CompositingMode.SourceOver;
 

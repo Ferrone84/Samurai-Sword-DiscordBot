@@ -1,18 +1,52 @@
 using System.Drawing;
+using GameRendering.UI;
 
-namespace KatanaBot.GameRendering {
+namespace GameRendering {
 	public static class DrawingExtensions {
+		public static Point Compose(this Rectangle rectangle, RelativePoint relative_point) {
+			int x, y;
+			x = rectangle.X + relative_point.X;
+			var h_align = relative_point.Alignment.Horizontal();
+			if (h_align == HorizontalAlignment.Center) {x += rectangle.Width/2;}
+			else if (h_align == HorizontalAlignment.Right) {x += rectangle.Width;}
+
+			y = rectangle.Y + relative_point.Y;
+			var v_align = relative_point.Alignment.Vertical();
+			if (v_align == VerticalAlignment.Middle) {y += rectangle.Height/2;}
+			else if (v_align == VerticalAlignment.Bottom) {y += rectangle.Height;}
+
+			return new Point(x, y);
+		}
+		public static Rectangle Compose(this Rectangle rectangle, RelativeRectangle relative_rectangle) {
+			var point = rectangle.Compose(relative_rectangle.Offset);
+			int x = point.X, y = point.Y;
+			x = rectangle.X + relative_rectangle.Offset.X;
+			var h_align = relative_rectangle.Size.Alignment.Horizontal();
+			if (h_align == HorizontalAlignment.Center) {x -= relative_rectangle.Width/2;}
+			else if (h_align == HorizontalAlignment.Right) {x -= relative_rectangle.Width;}
+
+			y = rectangle.Y + relative_rectangle.Offset.Y;
+			var v_align = relative_rectangle.Size.Alignment.Vertical();
+			if (v_align == VerticalAlignment.Middle) {y -= relative_rectangle.Height/2;}
+			else if (v_align == VerticalAlignment.Bottom) {y -= relative_rectangle.Height;}
+
+			return new Rectangle(x, y, relative_rectangle.Width, relative_rectangle.Height);
+		}
 		/* Fucking Microsoft figured out how to fuck it even more *STARTING TO HATE CSHARP* */
-		public static Graphics Compose(this Graphics graphics, Bitmap bmp, int x, int y) {
+		public static Graphics Compose(this Graphics graphics, System.Drawing.Bitmap bmp, int x, int y) {
 			graphics.DrawImage(bmp, x, y, bmp.Width, bmp.Height);
 			return graphics;
 		}
-		public static Graphics Compose(this Graphics graphics, Bitmap bmp, Rectangle source_rect, Rectangle target_rect) {
-			graphics.DrawImage(bmp, target_rect, source_rect, GraphicsUnit.Pixel);
+		public static Graphics Compose(this Graphics graphics, System.Drawing.Bitmap bmp, Rectangle dest_rect) {
+			graphics.DrawImage(bmp, dest_rect);
 			return graphics;
 		}
-		public static Graphics Compose(this Graphics graphics, Bitmap bmp, RectangleF source_rect, RectangleF target_rect) {
-			graphics.DrawImage(bmp, target_rect, source_rect, GraphicsUnit.Pixel);
+		public static Graphics Compose(this Graphics graphics, System.Drawing.Bitmap bmp, Rectangle source_rect, Rectangle dest_rect) {
+			graphics.DrawImage(bmp, dest_rect, source_rect, GraphicsUnit.Pixel);
+			return graphics;
+		}
+		public static Graphics Compose(this Graphics graphics, System.Drawing.Bitmap bmp, RectangleF source_rect, RectangleF dest_rect) {
+			graphics.DrawImage(bmp, dest_rect, source_rect, GraphicsUnit.Pixel);
 			return graphics;
 		}
 		public static HorizontalAlignment Horizontal(this ContentAlignment alignment) {

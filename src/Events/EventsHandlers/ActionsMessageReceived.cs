@@ -41,7 +41,8 @@ namespace Events.EventsHandlers
 					Regex regex = new Regex(@"k+a+t+a+n+a+");
 					if (regex.Match(message.Content.ToLower()).Success) {
 						IUserMessage messageSent = await message.Channel.SendMessageAsync("Lancement du jeu Katana ! Sélectionne un nombre de joueurs.");
-						await messageSent.AddReactionsAsync(new IEmote[] { EmoteManager.Three, EmoteManager.Four, EmoteManager.Five, EmoteManager.Six, EmoteManager.Seven });
+						await messageSent.AddReactionsAsync(EmoteManager.TextEmojis.GetEmojis("3","4","5","6","7"));
+							// new IEmote[] { EmoteManager.Three, EmoteManager.Four, EmoteManager.Five, EmoteManager.Six, EmoteManager.Seven });
 						//plus qu'à stocker le message où il faut pour save l'objet
 						//et le user
 						//pour l'instant je le fais en sale
@@ -125,24 +126,8 @@ namespace Events.EventsHandlers
 				else {await message.Channel.SendMessageAsync($"Ce n'est pas un nombre!");}
 				return;
 			}
-			if (reaction.Emote.Equals(EmoteManager.Three)) {
-				playerNumber = 3;
-			}
-			else if (reaction.Emote.Equals(EmoteManager.Four)) {
-				playerNumber = 4;
-			}
-			else if (reaction.Emote.Equals(EmoteManager.Five)) {
-				playerNumber = 5;
-			}
-			else if (reaction.Emote.Equals(EmoteManager.Six)) {
-				playerNumber = 6;
-			}
-			else if (reaction.Emote.Equals(EmoteManager.Seven)) {
-				playerNumber = 7;
-			}
-
-			await message.Channel.SendMessageAsync($"Lancement de la partie avec {playerNumber} joueurs.");
-			await message.DeleteAsync();
+			else {await message.Channel.SendMessageAsync($"Ce n'est pas un nombre!");}
+			return;
 		}
 	}
 }

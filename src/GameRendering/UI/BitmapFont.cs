@@ -4,11 +4,11 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace KatanaBot.GameRendering {
+namespace GameRendering.UI {
 	public class BitmapFont {
-		private readonly Bitmap charset;
+		private readonly System.Drawing.Bitmap charset;
 		private readonly ConcurrentDictionary<char, (Rectangle Outer, Rectangle Inner)> chars_rects;
-		public BitmapFont(Bitmap charset, IDictionary<char, (Rectangle, Rectangle)> rects) {
+		public BitmapFont(System.Drawing.Bitmap charset, IDictionary<char, (Rectangle, Rectangle)> rects) {
 			this.charset = charset;
 			this.chars_rects = new ConcurrentDictionary<char, (Rectangle, Rectangle)>(rects);
 		}
@@ -27,9 +27,9 @@ namespace KatanaBot.GameRendering {
 			width += right_margin;
 			return new Rectangle(0, 0, width, height);
 		}
-		public Bitmap MakeText(string str) {
+		public System.Drawing.Bitmap MakeText(string str) {
 			var rect = this.TextSize(str);
-			var bmp = new Bitmap(rect.Width, rect.Height);
+			var bmp = new System.Drawing.Bitmap(rect.Width, rect.Height);
 			var g = Graphics.FromImage(bmp);
 			g.CompositingMode = CompositingMode.SourceOver;
 			int x = 0;
