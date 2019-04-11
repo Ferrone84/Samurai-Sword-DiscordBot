@@ -11,8 +11,6 @@ using Discord.WebSocket;
 using Events.EventsHandling;
 using KatanaBot.Data;
 
-using Cards;
-
 namespace KatanaBot
 {
 	public class KatanaBot
@@ -21,6 +19,7 @@ namespace KatanaBot
 
 		public async Task MainAsync()
 		{
+			return;
 			DiscordSocketConfig discordSocketConfig = new DiscordSocketConfig {
 				MessageCacheSize = 100
 			};

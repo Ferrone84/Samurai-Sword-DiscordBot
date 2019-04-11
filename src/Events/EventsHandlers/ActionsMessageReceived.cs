@@ -12,7 +12,6 @@ using Discord.Commands;
 using Discord.Rest;
 using Discord.WebSocket;
 
-using Cards;
 using CollectionExtensions;
 using Events.EventsHandling;
 using KatanaBot;
@@ -65,10 +64,10 @@ namespace Events.EventsHandlers
 				List<IUser> users = new List<IUser>() {guild.GetUser(293780484822138881), guild.GetUser(150338863234154496), guild.GetUser(342330092032098304)};
 
 				//setup du deck et des cartes
-				CardManager cardManager = new CardManager(users.Count);
-				List<Card> deck = cardManager.Deck.Shuffle().ToList();
-				List<Card> roles = cardManager.Roles.Shuffle().ToList();
-				List<Card> characters = cardManager.Characters.Shuffle().Take(users.Count).ToList();
+				// CardManager cardManager = new CardManager(users.Count);
+				// List<Card> deck = cardManager.Deck.Shuffle().ToList();
+				// List<Card> roles = cardManager.Roles.Shuffle().ToList();
+				// List<Card> characters = cardManager.Characters.Shuffle().Take(users.Count).ToList();
 
 				RestCategoryChannel channelsCategorie = await guild.CreateCategoryChannelAsync("Katana");
 				RestTextChannel gameChannel = await guild.CreateTextChannelAsync("Jeu", x =>
@@ -79,7 +78,7 @@ namespace Events.EventsHandlers
 
 				foreach ((IUser user, int i) in users.Shuffle().Select((value, i) => (value, i))) {
 
-					Card role = roles[i];
+					/*Card role = roles[i];
 					Card character = characters[i];
 					//alors ici j'hésite entre un Player qui serait de la forme => Player(IUser, role, character) : IPlayer
 					//ou un Tuple<IUser, Player> avec un Player(role, character) : Iplayer
@@ -102,7 +101,7 @@ namespace Events.EventsHandlers
 					await channel.SendMessageAsync($"Bienvenue à toi {user.Mention} ! Dans cette partie tu aura le rôle de {role.Name}.");
 
 					DataManager.ElementsToDelete.Add(channel);
-					DataManager.ElementsToDelete.Add(discordRole);
+					DataManager.ElementsToDelete.Add(discordRole);**/
 				}
 				DataManager.ElementsToDelete.Add(gameChannel);
 				DataManager.ElementsToDelete.Add(channelsCategorie);

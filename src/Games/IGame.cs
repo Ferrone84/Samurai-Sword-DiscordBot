@@ -8,6 +8,6 @@ namespace Games {
 			Content string[]
 			Subs []
 		 */
-		IGameInProgress New();
+		IGameInstance New();
 	}
 }

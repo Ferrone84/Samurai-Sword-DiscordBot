@@ -1,5 +1,5 @@
 namespace Games {
-	interface IPlayer {
+	public interface IPlayer {
 		string Name {get;}
 	}
 }

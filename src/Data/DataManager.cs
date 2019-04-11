@@ -4,8 +4,6 @@ using System.Threading;
 using Discord;
 using Discord.WebSocket;
 
-using Cards;
-
 namespace KatanaBot.Data
 {
 	public class DataManager
