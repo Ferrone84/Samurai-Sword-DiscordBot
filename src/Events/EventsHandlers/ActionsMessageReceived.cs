@@ -108,8 +108,7 @@ namespace Events.EventsHandlers
 
 				//maintenant il reste à distribuer les cartes en clockwise à chacun en commençant par le shogun !
 				//puis à envoyer la main de chaque joueurs dans leur channel respectif
-				//(de ce fait, faut vérif que les paths dans CardManager sont bons (ce n'est pas le cas actuellement) pck sinon si on affiche les mains des joueurs => patatra)
-				
+				//(de ce fait, faut vérif que les paths dans CardManager sont bons (ce n'est pas le cas actuellement) pck sinon si on affiche les mains des joueurs => patatra)s
 			}
 			catch (System.Exception e) {
 				e.Display(MethodBase.GetCurrentMethod().ToString());

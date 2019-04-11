@@ -11,16 +11,13 @@ using Discord.WebSocket;
 using Events.EventsHandling;
 using KatanaBot.Data;
 
-namespace KatanaBot
-{
-	public class KatanaBot
-	{
+namespace KatanaBot {
+	public class KatanaBot {
 		private EventHandlersManager eventHandlersManager;
 
-		public async Task MainAsync()
-		{
-			return;
-			DiscordSocketConfig discordSocketConfig = new DiscordSocketConfig {
+		public async Task MainAsync() {
+			DiscordSocketConfig discordSocketConfig = new DiscordSocketConfig()
+			{
 				MessageCacheSize = 100
 			};
 
@@ -29,9 +26,8 @@ namespace KatanaBot
 			DataManager.Client.Log += Log;
 			try {
 				eventHandlersManager.AddHandlers(GetAllEventsHandlers("Events.EventsHandlers").ToArray());
-			}
-			catch (Exception e) { e.Display("MainAsync() => EventHandlersManager.AddHandlers"); }
-			
+			} catch (Exception e) { e.Display("MainAsync() => EventHandlersManager.AddHandlers"); }
+
 			DataManager.LicenceToLive = new CancellationTokenSource();
 			await DataManager.Client.LoginAsync(TokenType.Bot, Utils.Token);
 			await DataManager.Client.StartAsync();
@@ -44,14 +40,12 @@ namespace KatanaBot
 			// Block this task until the program is closed.
 			try {
 				await Task.Delay(-1, DataManager.LicenceToLive.Token);
-			}
-			catch (TaskCanceledException) {
+			} catch (TaskCanceledException) {
 				await Deconnection();
 			}
 		}
 
-		private async Task Deconnection()
-		{
+		private async Task Deconnection() {
 			try {
 				Console.WriteLine("Le bot a bien été coupé.");
 				eventHandlersManager.Unbind(DataManager.Client);
@@ -60,21 +54,18 @@ namespace KatanaBot
 				await DataManager.Client.StopAsync();
 				DataManager.Client.Dispose();
 				Environment.Exit(0);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				e.Display(MethodBase.GetCurrentMethod().ToString());
 			}
 		}
 
-		private Task Log(LogMessage msg)
-		{
+		private Task Log(LogMessage msg) {
 			Console.WriteLine(msg.ToString());
 
 			return Task.CompletedTask;
 		}
 
-		private List<IEventHandler> GetAllEventsHandlers(string nameSpace)
-		{
+		private List<IEventHandler> GetAllEventsHandlers(string nameSpace) {
 			List<IEventHandler> eventsHandlers = new List<IEventHandler>();
 
 			try {
@@ -87,8 +78,7 @@ namespace KatanaBot
 						eventsHandlers.Add((t.GetConstructor(Type.EmptyTypes).Invoke(Type.EmptyTypes) as IEventHandler));
 					}
 				}
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				e.Display(MethodBase.GetCurrentMethod().ToString());
 			}
 			return eventsHandlers;
