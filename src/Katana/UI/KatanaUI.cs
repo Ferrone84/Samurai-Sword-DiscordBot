@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using GameRendering.UI;
 using KatanaBot.Data;
 
@@ -26,22 +27,39 @@ namespace KatanaGame {
 			};
 			this.fonts["stats_base"] = new BitmapFont(Resources.Assets.UI("DigitsBlueInWhite"), font_chars);
 			this.fonts["stats_bonus"] = new BitmapFont(Resources.Assets.UI("DigitsBlackInWhite"), font_chars);
-
+			
 			var profile_top_rectangle = new RelativeRectangle(
-				offset: (0, 0, ContentAlignment.MiddleCenter),
-				size: (176, 215, ContentAlignment.MiddleCenter)
+				offset: (0, 0, ContentAlignment.TopCenter),
+				size: (176, 215, ContentAlignment.TopCenter)
 			);
-			string color = "gold";
-			var shadow = new GameRendering.UI.FixedBitmap(profile_top_rectangle, Resources.Assets.UI("shadow"));
-			var over = new GameRendering.UI.FixedBitmap(profile_top_rectangle, Resources.Assets.UI("red_over"));
-			var loop = new GameRendering.UI.DynamicBitmap<MockPlayer>(profile_top_rectangle, (player) => Resources.Assets.UI("loop-" + player.Character.Picture));
-			var back_banner = new GameRendering.UI.FixedBitmap(
-				new RelativeRectangle(
-					offset: (0, 158, ContentAlignment.TopCenter),
-					size: (144, 226, ContentAlignment.TopCenter)
-				),
-				Resources.Assets.UI("back")
+			
+			var d = new DynamicDisposition<KatanaPlayer>(profile_top_rectangle,
+				new string[] {"back_banner", "character", "shadow", "over", "loop"},
+				new Dictionary<string, IElement>() {
+					{"character", new DynamicBitmap<KatanaPlayer>(profile_top_rectangle, (player) => Resources.Assets.UI("characters/" + player.Character.Picture))},
+					{"shadow", new FixedBitmap(profile_top_rectangle, Resources.Assets.UI("shadow"))},
+					{"over", new FixedBitmap(profile_top_rectangle, Resources.Assets.UI("red_over"))},
+					{"loop", new DynamicBitmap<KatanaPlayer>(profile_top_rectangle, (player) => Resources.Assets.UI("loop-" + LoopColor(player)))},
+					{"back_banner", new FixedBitmap(
+						new RelativeRectangle(
+							offset: (0, 158, ContentAlignment.TopCenter),
+							size: (144, 226, ContentAlignment.TopCenter)
+						),
+						Resources.Assets.UI("back")
+					)}
+				}
 			);
+			var p = new KatanaPlayer();
+			Bitmap b = new Bitmap(176, 384);
+			var g = Graphics.FromImage(b);
+			d.Render(g, new Rectangle(0, 0, 176, 384), p);
+			b.Save("RefactoredChiyome.png", System.Drawing.Imaging.ImageFormat.Png);
+		}
+		public string LoopColor(KatanaPlayer player) {
+			switch (player.Role.Name) {
+				case "Shogun" : return "gold";
+				default: return "silver";
+			}
 		}
 	}
 }

@@ -20,12 +20,11 @@ namespace GameRendering {
 		public static Rectangle Compose(this Rectangle rectangle, RelativeRectangle relative_rectangle) {
 			var point = rectangle.Compose(relative_rectangle.Offset);
 			int x = point.X, y = point.Y;
-			x = rectangle.X + relative_rectangle.Offset.X;
+
 			var h_align = relative_rectangle.Size.Alignment.Horizontal();
 			if (h_align == HorizontalAlignment.Center) {x -= relative_rectangle.Width/2;}
 			else if (h_align == HorizontalAlignment.Right) {x -= relative_rectangle.Width;}
 
-			y = rectangle.Y + relative_rectangle.Offset.Y;
 			var v_align = relative_rectangle.Size.Alignment.Vertical();
 			if (v_align == VerticalAlignment.Middle) {y -= relative_rectangle.Height/2;}
 			else if (v_align == VerticalAlignment.Bottom) {y -= relative_rectangle.Height;}

@@ -2,16 +2,13 @@ using System.Drawing;
 
 namespace GameRendering.UI {
 	public class RelativeSize {
-		private int width;
-		public int Width {get => this.width;}
-		private int height;
-		public int Height {get => this.height;}
-		private ContentAlignment alignment;
-		public ContentAlignment Alignment {get => this.alignment;}
+		public int Width { get; }
+		public int Height { get; }
+		public ContentAlignment Alignment { get; }
 		public RelativeSize(int width, int height, ContentAlignment alignment=ContentAlignment.TopLeft) {
-			this.width = width;
-			this.height = height;
-			this.alignment = alignment;
+			this.Width = width;
+			this.Height = height;
+			this.Alignment = alignment;
 		}
 		public RelativeSize((int, int) rs) : this(rs.Item1, rs.Item2) {}
 		public RelativeSize((int, int, ContentAlignment) rs) : this(rs.Item1, rs.Item2, rs.Item3) {}

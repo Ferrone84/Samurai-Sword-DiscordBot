@@ -2,25 +2,18 @@ using Games.Cards;
 
 namespace KatanaGame {
 	public abstract class KatanaCardModel : ICardModel {
-		protected string name;
-		protected string picture;
-		protected string description;
-
-		public string Name { get { return this.name; } }
-		public string Picture { get { return this.picture; } }
-		public string Description { get { return this.description; } }
+		public string Name { get; }
+		public string Picture { get; }
+		public string Description { get; }
 
 		protected KatanaCardModel(string name, string description, string picture) {
-			this.name = name;
-			this.description = description;
-			this.picture = picture;
+			this.Name = name;
+			this.Description = description;
+			this.Picture = picture;
 		}
 
 		public override string ToString() {
-			return $"[CardType] : {this.GetType().Name} / [Name] : {Name} / [Picture] : {Picture} / [Desc] : {Description}";
+			return $"[CardType] : {this.GetType().Name} / [Name] : {this.Name} / [Picture] : {this.Picture} / [Desc] : {this.Description}";
 		}
-	}
-	public abstract class KatanaPlayingCardModel : KatanaCardModel {
-		protected KatanaPlayingCardModel(string name, string description, string picture) : base(name:name, description:description, picture:picture) {}
 	}
 }

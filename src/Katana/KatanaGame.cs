@@ -32,7 +32,7 @@ namespace KatanaGame {
 				/* Properties */
 				{"armor", new Property("Armure", "Les autres joueurs vous attaquent avec une difficulté augmentée de 1.", "armor")},
 				{"fast-draw", new Property("Attaque rapide", "Vos armes causent 1 blessure supplémentaire.", "fast-draw")},
-				{"foucs", new Property("Concentration", "Vous pouvez jouer 1 arme de plus par tour.", "focus")}
+				{"focus", new Property("Concentration", "Vous pouvez jouer 1 arme de plus par tour.", "focus")}
 			}
 		);
 		private ConcurrentDictionary<string, Character> character_cards = new ConcurrentDictionary<string, Character>(

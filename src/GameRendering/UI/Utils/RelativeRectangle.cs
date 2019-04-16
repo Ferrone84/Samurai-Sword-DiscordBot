@@ -2,13 +2,11 @@ using System.Drawing;
 
 namespace GameRendering.UI {
 	public class RelativeRectangle {
-		private readonly RelativePoint offset;
-		public RelativePoint Offset {get;}
-		private readonly RelativeSize size;
-		public RelativeSize Size {get;}
+		public RelativePoint Offset { get; }
+		public RelativeSize Size { get; }
 		public RelativeRectangle(RelativePoint offset, RelativeSize size) {
-			this.offset = offset;
-			this.size = size;
+			this.Offset = offset;
+			this.Size = size;
 		}
 		public RelativeRectangle((RelativePoint, RelativeSize) rect) : this(rect.Item1, rect.Item2) {}
 		public static implicit operator RelativeRectangle((RelativePoint, RelativeSize) rect) => new RelativeRectangle(rect);

@@ -9,6 +9,7 @@ using Discord;
 using Discord.WebSocket;
 
 using Events.EventsHandling;
+using KatanaGame;
 using KatanaBot.Data;
 
 namespace KatanaBot {
@@ -16,6 +17,8 @@ namespace KatanaBot {
 		private EventHandlersManager eventHandlersManager;
 
 		public async Task MainAsync() {
+			new KatanaUI();
+			return;
 			DiscordSocketConfig discordSocketConfig = new DiscordSocketConfig()
 			{
 				MessageCacheSize = 100

@@ -6,15 +6,14 @@ namespace KatanaGame {
 			Two = 2,
 			Three = 3
 		}
-		private StarRank stars;
-		public StarRank Stars { get { return this.stars; } }
+		public StarRank Stars { get; }
 
 		public Role(string name, string description, string picture, StarRank stars) : base(name:name, description:description, picture:picture) {
-			this.stars = stars;
+			this.Stars = stars;
 		}
 
 		public override string ToString() {
-			return base.ToString() + $" / [Stars] : {this.stars.ToString()}";
+			return base.ToString() + $" / [Stars] : {this.Stars.ToString()}";
 		}
 	}
 }
