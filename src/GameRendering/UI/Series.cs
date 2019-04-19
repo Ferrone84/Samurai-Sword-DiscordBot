@@ -46,7 +46,7 @@ namespace GameRendering.UI {
 			foreach (string element_id in this.order) {
 				var point = dynamic_offset.Point(i);
 				int x = point.X + origin.X;
-				int y = point.X + origin.X;
+				int y = point.Y + origin.Y;
 				var shifted_origin = new Rectangle(x, y, origin.Width, origin.Height);
 				var element = this.elements.GetValueOrDefault(element_id, null);
 				if (element == null) {}

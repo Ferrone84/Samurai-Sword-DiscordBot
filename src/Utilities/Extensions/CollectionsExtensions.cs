@@ -1,7 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 namespace CollectionExtensions {
 	public static class Extensions {
+		public static bool IsEmpty(this IEnumerable collection) {
+			foreach (var element in collection) { return false;}
+			return true;
+		}
 		public static IEnumerable<TElement> Yield<TElement>(this TElement element) {
 			yield return element;
 			yield break;

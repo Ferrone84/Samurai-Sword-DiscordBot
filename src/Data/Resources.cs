@@ -14,7 +14,6 @@ namespace KatanaBot.Data {
 			private static string UI_PATH = $@"{IMG_PATH}ui/";
 			private static string UICHARACTER_PATH = $@"{UI_PATH}characters/";
 			private static Bitmap Load(string id, string path) {
-				Console.WriteLine(path);
 				Bitmap bmp;
 				// if (Bitmaps.TryGetValue(id, out bmp)) {return Bitmaps[id];}
 				bmp = new Bitmap(path);

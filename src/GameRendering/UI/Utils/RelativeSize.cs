@@ -1,7 +1,7 @@
 using System.Drawing;
 
 namespace GameRendering.UI {
-	public class RelativeSize {
+	public struct RelativeSize {
 		public int Width { get; }
 		public int Height { get; }
 		public ContentAlignment Alignment { get; }

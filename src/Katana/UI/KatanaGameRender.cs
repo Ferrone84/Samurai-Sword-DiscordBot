@@ -40,18 +40,18 @@ namespace GameRendering {
 			
 			var ProfileSize = new Size(width:176, height:384);
 			var psize = new RelativeSize(64, 64);
-			var Points = new ATypeWeWillNameProperly(
-				types:new string[] {"honor", "resilience"},
-				rect:new RelativeRectangle(offset:(0, ProfileSize.Width - psize.Height/2), size:psize),
-				dynamic_offset:(i=>i * (ProfileSize.Width - psize.Width), i=>0),
-				valuerect:new RelativeRectangle(offset:(0, 0, ContentAlignment.MiddleCenter), size:(0, 56, ContentAlignment.MiddleCenter))
-			);
-			var Stats = new ATypeWeWillNameProperly(
-				types:new string[] {"armor", "weapons", "damage"},
-				rect:new RelativeRectangle(offset:(24, Points.Offset.Y + Points.Size.Height), size:(48, 48)),
-				dynamic_offset:(i=>0, i=>i*48),
-				valuerect:new RelativeRectangle(offset:(40, 12, ContentAlignment.TopLeft), size:(0, 36, ContentAlignment.TopCenter))
-			);
+			// var Points = new ATypeWeWillNameProperly(
+			// 	types:new string[] {"honor", "resilience"},
+			// 	rect:new RelativeRectangle(offset:(0, ProfileSize.Width - psize.Height/2), size:psize),
+			// 	dynamic_offset:(i=>i * (ProfileSize.Width - psize.Width), i=>0),
+			// 	valuerect:new RelativeRectangle(offset:(0, 0, ContentAlignment.MiddleCenter), size:(0, 56, ContentAlignment.MiddleCenter))
+			// );
+			// var Stats = new ATypeWeWillNameProperly(
+			// 	types:new string[] {"armor", "weapons", "damage"},
+			// 	rect:new RelativeRectangle(offset:(24, Points.Offset.Y + Points.Size.Height), size:(48, 48)),
+			// 	dynamic_offset:(i=>0, i=>i*48),
+			// 	valuerect:new RelativeRectangle(offset:(40, 12, ContentAlignment.TopLeft), size:(0, 36, ContentAlignment.TopCenter))
+			// );
 			/*
 				On référence les séries d'icones par nom
 				Et on demande à l'ui de render telle série avec telles valeurs
@@ -97,7 +97,6 @@ namespace GameRendering {
 							icone d'intouchable
 
 			 */
-			var StatsBonusesH = 40;
 		}
 		private void InitializeBlankProfile() {
 			var g = Graphics.FromImage(BLANK_PROFILE);

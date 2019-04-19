@@ -1,7 +1,7 @@
 using System.Drawing;
 
 namespace GameRendering.UI {
-	public class RelativePoint {
+	public struct RelativePoint {
 		public int X { get; }
 		public int Y { get; }
 		public ContentAlignment Alignment { get; }

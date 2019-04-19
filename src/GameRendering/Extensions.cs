@@ -1,5 +1,6 @@
 using System.Drawing;
 using GameRendering.UI;
+using System;
 
 namespace GameRendering {
 	public static class DrawingExtensions {
@@ -49,35 +50,39 @@ namespace GameRendering {
 			return graphics;
 		}
 		public static HorizontalAlignment Horizontal(this ContentAlignment alignment) {
-			if (alignment == ContentAlignment.BottomCenter) {return HorizontalAlignment.Center;}
-			if (alignment == ContentAlignment.BottomLeft  ) {return HorizontalAlignment.Left;  }
-			if (alignment == ContentAlignment.BottomRight ) {return HorizontalAlignment.Right; }
-			if (alignment == ContentAlignment.MiddleCenter) {return HorizontalAlignment.Center;}
-			if (alignment == ContentAlignment.MiddleLeft  ) {return HorizontalAlignment.Left;  }
-			if (alignment == ContentAlignment.MiddleRight ) {return HorizontalAlignment.Right; }
-			if (alignment == ContentAlignment.TopCenter   ) {return HorizontalAlignment.Center;}
-			if (alignment == ContentAlignment.TopLeft     ) {return HorizontalAlignment.Left;  }
-			if (alignment == ContentAlignment.TopRight    ) {return HorizontalAlignment.Right; }
-			return HorizontalAlignment.Left;
+			switch (alignment) {
+				case ContentAlignment.BottomCenter: { return HorizontalAlignment.Center; }
+				case ContentAlignment.BottomLeft:   { return HorizontalAlignment.Left;   }
+				case ContentAlignment.BottomRight:  { return HorizontalAlignment.Right;  }
+				case ContentAlignment.MiddleCenter: { return HorizontalAlignment.Center; }
+				case ContentAlignment.MiddleLeft:   { return HorizontalAlignment.Left;   }
+				case ContentAlignment.MiddleRight:  { return HorizontalAlignment.Right;  }
+				case ContentAlignment.TopCenter:    { return HorizontalAlignment.Center; }
+				case ContentAlignment.TopLeft:      { return HorizontalAlignment.Left;   }
+				case ContentAlignment.TopRight:     { return HorizontalAlignment.Right;  }
+				default: { return HorizontalAlignment.Left; }
+			}
 		}
 		public static VerticalAlignment Vertical(this ContentAlignment alignment) {
-			if (alignment == ContentAlignment.BottomCenter) {return VerticalAlignment.Bottom;}
-			if (alignment == ContentAlignment.BottomLeft  ) {return VerticalAlignment.Bottom;}
-			if (alignment == ContentAlignment.BottomRight ) {return VerticalAlignment.Bottom;}
-			if (alignment == ContentAlignment.MiddleCenter) {return VerticalAlignment.Middle;}
-			if (alignment == ContentAlignment.MiddleLeft  ) {return VerticalAlignment.Middle;}
-			if (alignment == ContentAlignment.MiddleRight ) {return VerticalAlignment.Middle;}
-			if (alignment == ContentAlignment.TopCenter   ) {return VerticalAlignment.Top;   }
-			if (alignment == ContentAlignment.TopLeft     ) {return VerticalAlignment.Top;   }
-			if (alignment == ContentAlignment.TopRight    ) {return VerticalAlignment.Top;   }
-			return VerticalAlignment.Top;
+			switch (alignment) {
+				case ContentAlignment.BottomCenter: { return VerticalAlignment.Bottom; }
+				case ContentAlignment.BottomLeft:   { return VerticalAlignment.Bottom; }
+				case ContentAlignment.BottomRight:  { return VerticalAlignment.Bottom; }
+				case ContentAlignment.MiddleCenter: { return VerticalAlignment.Middle; }
+				case ContentAlignment.MiddleLeft:   { return VerticalAlignment.Middle; }
+				case ContentAlignment.MiddleRight:  { return VerticalAlignment.Middle; }
+				case ContentAlignment.TopCenter:    { return VerticalAlignment.Top;    }
+				case ContentAlignment.TopLeft:      { return VerticalAlignment.Top;    }
+				case ContentAlignment.TopRight:     { return VerticalAlignment.Top;    }
+				default: { return VerticalAlignment.Top; }
+			}
 		}
 		public static void DrawNumber(this Graphics g, BitmapFont font, int number, int x, int y, RelativeSize size, bool enforce_plus=false, bool dashzero=false) {
 			string str = ((number == 0) && dashzero ? "-" : ((enforce_plus && (number >= 0)) ? "+" : "") + number.ToString());
 			g.DrawText(font, str, x, y, size);
 		}
 		public static void DrawText(this Graphics g, BitmapFont font, string str, int x, int y, RelativeSize size) {
-			var text_bmp = font.MakeText(str);
+			var text_bmp = font.RenderText(str);
 			var src = new RectangleF(0, 0, text_bmp.Width, text_bmp.Height);
 			float fx = size.Height * 1.0F / text_bmp.Height;
 			float f_x = x, f_w = text_bmp.Width * fx;
