@@ -14,50 +14,56 @@ using KatanaBot.Data;
 
 namespace KatanaBot {
 	public class KatanaBot {
-		private EventHandlersManager eventHandlersManager;
+		private EventHandlersManager event_handlers_manager;
 
-		public async Task MainAsync() {
+		public async Task MainAsync( ) {
 			new KatanaUI();
 			return;
-			DiscordSocketConfig discordSocketConfig = new DiscordSocketConfig()
-			{
+			await this.Setup( );
+			await this.Run();
+			await this.CleanUp();
+		}
+		private async Task Setup( ) {
+			DiscordSocketConfig discord_socket_config = new DiscordSocketConfig() {
 				MessageCacheSize = 100
 			};
 
-			DataManager.Client = new DiscordSocketClient(discordSocketConfig);
-			eventHandlersManager = new EventHandlersManager(DataManager.Client);
+			DataManager.Client = new DiscordSocketClient(discord_socket_config);
+			this.event_handlers_manager = new EventHandlersManager(DataManager.Client);
 			DataManager.Client.Log += Log;
 			try {
-				eventHandlersManager.AddHandlers(GetAllEventsHandlers("Events.EventsHandlers").ToArray());
-			} catch (Exception e) { e.Display("MainAsync() => EventHandlersManager.AddHandlers"); }
+				this.event_handlers_manager.AddHandlers(GetAllEventsHandlers("Events.EventsHandlers").ToArray());
+			}
+			catch (Exception e) { e.Display("MainAsync() => EventHandlersManager.AddHandlers"); }
 
 			DataManager.LicenceToLive = new CancellationTokenSource();
 			await DataManager.Client.LoginAsync(TokenType.Bot, Utils.Token);
-			await DataManager.Client.StartAsync();
+			await DataManager.Client.StartAsync( );
 
-			Console.CancelKeyPress += async delegate (object sender, ConsoleCancelEventArgs e) {
+			Console.CancelKeyPress += delegate (object sender, ConsoleCancelEventArgs e) {
 				e.Cancel = true;
-				await Deconnection();
+				DataManager.LicenceToLive.Cancel();
+				//await Deconnection();
 			};
-
-			// Block this task until the program is closed.
-			try {
-				await Task.Delay(-1, DataManager.LicenceToLive.Token);
-			} catch (TaskCanceledException) {
-				await Deconnection();
-			}
 		}
-
-		private async Task Deconnection() {
+		private async Task Run( ) {
+			try { await Task.Delay(-1, DataManager.LicenceToLive.Token); }
+			catch (TaskCanceledException) { }
+		}
+		private async Task CleanUp( ) {
+			await this.Deconnection();
+		}
+		private async Task Deconnection( ) {
 			try {
-				Console.WriteLine("Le bot a bien été coupé.");
-				eventHandlersManager.Unbind(DataManager.Client);
+				event_handlers_manager.Unbind(DataManager.Client);
 				DataManager.Client.Log -= Log;
 				await DataManager.Client.LogoutAsync();
 				await DataManager.Client.StopAsync();
+				Console.WriteLine("Le bot a bien été coupé.");
 				DataManager.Client.Dispose();
 				Environment.Exit(0);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				e.Display(MethodBase.GetCurrentMethod().ToString());
 			}
 		}
@@ -81,7 +87,8 @@ namespace KatanaBot {
 						eventsHandlers.Add((t.GetConstructor(Type.EmptyTypes).Invoke(Type.EmptyTypes) as IEventHandler));
 					}
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				e.Display(MethodBase.GetCurrentMethod().ToString());
 			}
 			return eventsHandlers;

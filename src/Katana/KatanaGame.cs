@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using Games;
 
 namespace KatanaGame {
-	public class KatanaGame {
+	public class KatanaGame : IGame<KatanaGameInstance> {
 		private ConcurrentDictionary<string, KatanaPlayingCardModel> playing_cards = new ConcurrentDictionary<string, KatanaPlayingCardModel>(
 			new Dictionary<string, KatanaPlayingCardModel>() {
 				/* Weapons */
@@ -43,7 +44,7 @@ namespace KatanaGame {
 				{"goemon", new Character("Goemon", "Vous pouvez jouer 1 arme supplémentaire par tour.", "goemon", 5)},
 				{"hanzo", new Character("Hanzo", "Vous pouvez jouer vos cartes d'arme comme des parades (à moins que ça ne soit votre dernière carte en main).", "hanzo", 4)},
 				{"hideyoshi", new Character("Hideyoshi", "Durant votre phase de pioche, piochez 1 carte supplémentaire.", "hideyoshi", 4)},
-				{"ieyasu", new Character("Ieyasu", "Durant votre phase de pioche, vous pouvez prendre la carte du dessus de la défausse au lieu de piocher votre première carte. Vous devez piocher normalement la deuxième.", "ieyasu", 5)},
+				{"ieyasu", new Character("Ieyasu", "Durant votre phase de pioche, vous pouvez prendre la carte du dessus de la défausse au lieu de piocher votre première carte. Vous devez piocher la deuxième normalement.", "ieyasu", 5)},
 				{"kojiro", new Character("Kojiro", "Vos armes peuvent attaquer n'importe quel autre joueur sans tenir compte de la difficulté.", "kojiro", 5)},
 				{"musashi", new Character("Musashi", "Vos armes causent 1 blessure supplémentaire.", "musashi", 5)},
 				{"nobunaga", new Character("Nobunaga", "Durant votre tour, vous pouvez sacrifier 1 point de vie (sauf votre dernier) pour piocher 1 carte.", "nobunaga", 5)},
@@ -67,5 +68,13 @@ namespace KatanaGame {
 		public KatanaGame() {
 			
 		}
+
+		public string Name { get => "Katana"; }
+		public string Description { get => "Incarnez le Shogun, un de ses fidèles samuraïs, un ninja ou le solitaire ronin, et battez vous pour défendre l'honneur de votre camp."; }
+		public string Rules { get => throw new System.NotImplementedException(); }
+		public IEnumerable<IPhase> Phases { get => throw new System.NotImplementedException(); }
+
+		IGameInstance IGame.NewGame( ) => this.NewGame( );
+		public KatanaGameInstance NewGame( ) => new KatanaGameInstance(this);
 	}
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using CollectionExtensions;
 using Games.Cards;
 namespace KatanaGame {
-	public class CardManager {
+	public class CardsManager {
 		public static string CARDS_DIR = "resources/cards/";
 		public static string WEAPONS_DIR = $"{CARDS_DIR}weapons/";
 		public static string ROLES_DIR = $"{CARDS_DIR}genders/";
@@ -16,7 +16,7 @@ namespace KatanaGame {
 		public List<ICardModel> Characters { get; }
 		public List<ICardModel> Roles { get; }
 
-		public CardManager(int playerNumber) {
+		public CardsManager(int playerNumber) {
 			Weapon bokken = new Weapon("bokken", $"{WEAPONS_DIR}bokken.jpg", 1, 1);
 			Weapon bo = new Weapon("bo", $"{WEAPONS_DIR}bo.jpg", 2, 1);
 			Weapon daikyu = new Weapon("daikyu", $"{WEAPONS_DIR}daikyu.jpg", 5, 2);
@@ -42,7 +42,7 @@ namespace KatanaGame {
 			Character musashi = new Character("Musashi", $"{CHARACTERS_DIR}musashi.jpg", "Vos armes causent 1 dégat supplémentaire.", 5);
 			Character nobunaga = new Character("Nobunaga", $"{CHARACTERS_DIR}nobunaga.jpg", "Durant votre tour, vous pouvez perdre 1 point de vie (sauf votre dernier) pour piocher 1 carte.", 5);
 			Character tomoe = new Character("Tomoe", $"{CHARACTERS_DIR}tomoe.jpg", "Chaque fois qu'une de vos armes blesse un joueur, piochez 1 carte.", 5);
-			Character ushiwaka = new Character("Ushiwaka", $"{CHARACTERS_DIR}ushiwaka.jpg", "Chaque fois que vous perdez 1 point de vie à cause d'une arme, piochez 1 carte.", 4);
+			Character ushiwaka = new Character("Ushiwaka", $"{CHARACTERS_DIR}ushiwaka.jpg", "Pour chaque point de vie que vous perdez à cause d'une arme, piochez 1 carte.", 4);
 			Character rikyu = new Character("Rikyu", $"{CHARACTERS_DIR}rikyu.jpg", "Lorsque la pioche est épuisée, vous ne perdez pas de point d'honneur.", 4);
 
 			Property armure = new Property("armure", $"{PROPERTIES_DIR}armure.jpg", "Les autres joueurs vous attaquent avec une difficulté augmentée de 1.");
@@ -121,14 +121,14 @@ namespace KatanaGame {
 					Roles = new List<ICardModel>() { shogun, samurai, ronin, ninja1x, ninja2x, ninja3x }; //1 Shogun, 1 Samurai, 1 Ronin, 3 Ninja
 					break;
 				case 7:
-					Roles = new List<ICardModel>() { shogun, samurai, samurai, ronin, ninja1x, ninja2x, ninja3x }; //1 Shogun, 2 Samurai, 1 Ronin, 3 Ninja
+					Roles = new List<ICardModel>() { shogun, samurai1x, samurai2x, ronin, ninja1x, ninja2x, ninja3x }; //1 Shogun, 2 Samurai, 1 Ronin, 3 Ninja
 					break;
 			}
 		}
 
 		private void Register(ICardModel card, int number = 1) {
 			for (int i = 0; i < number; i++) {
-				Deck.Add(card);
+				this.Deck.Add(card);
 			}
 		}
 	}

@@ -8,6 +8,9 @@ namespace Games {
 			Content string[]
 			Subs []
 		 */
-		IGameInstance New();
+		IGameInstance NewGame();
+	}
+	public interface IGame<TInstance> : IGame where TInstance : IGameInstance {
+		new TInstance NewGame();
 	}
 }

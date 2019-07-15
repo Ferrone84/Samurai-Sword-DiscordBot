@@ -6,7 +6,7 @@ using Games.Cards;
 using CollectionExtensions;
 
 namespace KatanaGame {
-	public class KatanaPlayer : IHandedPlayer {
+	public class KatanaPlayer : IHandedPlayer /* %TODO%, IBoardedPlayer*/ {
 		public struct StatValues {
 			public int Base;
 			public int Bonus;
