@@ -7,8 +7,8 @@ namespace Games {
 		protected bool Terminated { get => this.running.IsCancellationRequested; }
 		public APhase( ) { }
 		public async Task Run( ) {
-			await this.Setup( );
 			this.running = new CancellationTokenSource( );
+			await this.Setup( );
 			await this.Proceed( );
 			await this.ClearUp( );
 		}

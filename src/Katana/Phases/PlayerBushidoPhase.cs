@@ -31,6 +31,7 @@ namespace KatanaGame {
 					/* ** Report honor point lost, report bushido victim ** */
 					/* ** If bushido causes loss of last honor point, report game end because of bushido ** */
 					this.GameInstance.GameOver |= (new Random( ).Next(16) == 0);
+					if (this.GameInstance.GameOver) { Console.WriteLine("It was its last point, how sad."); }
 				}
 			}
 			/* else */

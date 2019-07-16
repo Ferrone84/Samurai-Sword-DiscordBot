@@ -52,7 +52,7 @@ namespace Games {
 		}
 		protected virtual async Task<bool> CheckForPrematureTermination( ) { return false; /* Should be overridden to terminate the phase if needed */ }
 		public override sealed async Task Terminate( ) {
-			await this.current_phase?.Terminate( );
+			if (this.current_phase != null) { await this.current_phase.Terminate( ); }
 			await base.Terminate( );
 		}
 	}

@@ -17,7 +17,7 @@ namespace KatanaBot {
 		private EventHandlersManager event_handlers_manager;
 
 		public async Task MainAsync( ) {
-			new KatanaUI();
+			await new KatanaGame.KatanaGame( ).NewGame( ).Run( );
 			return;
 			await this.Setup( );
 			await this.Run();
@@ -30,9 +30,9 @@ namespace KatanaBot {
 
 			DataManager.Client = new DiscordSocketClient(discord_socket_config);
 			this.event_handlers_manager = new EventHandlersManager(DataManager.Client);
-			DataManager.Client.Log += Log;
+			DataManager.Client.Log += this.Log;
 			try {
-				this.event_handlers_manager.AddHandlers(GetAllEventsHandlers("Events.EventsHandlers").ToArray());
+				this.event_handlers_manager.AddHandlers(this.GetAllEventsHandlers("Events.EventsHandlers").ToArray());
 			}
 			catch (Exception e) { e.Display("MainAsync() => EventHandlersManager.AddHandlers"); }
 
@@ -55,8 +55,8 @@ namespace KatanaBot {
 		}
 		private async Task Deconnection( ) {
 			try {
-				event_handlers_manager.Unbind(DataManager.Client);
-				DataManager.Client.Log -= Log;
+				this.event_handlers_manager.Unbind(DataManager.Client);
+				DataManager.Client.Log -= this.Log;
 				await DataManager.Client.LogoutAsync();
 				await DataManager.Client.StopAsync();
 				Console.WriteLine("Le bot a bien été coupé.");
@@ -74,24 +74,24 @@ namespace KatanaBot {
 			return Task.CompletedTask;
 		}
 
-		private List<IEventHandler> GetAllEventsHandlers(string nameSpace) {
-			List<IEventHandler> eventsHandlers = new List<IEventHandler>();
+		private List<IEventHandler> GetAllEventsHandlers(string name_space) {
+			List<IEventHandler> events_handlers = new List<IEventHandler>();
 
 			try {
 				var types = Assembly.GetExecutingAssembly().GetTypes();
 				var filtered_types = types.Where(
-					t => ((t.Namespace != null) && t.Namespace.StartsWith(nameSpace))
+					t => ((t.Namespace != null) && t.Namespace.StartsWith(name_space))
 				);
 				foreach (var t in filtered_types) {
 					if (!t.Name.Contains("d_")) {
-						eventsHandlers.Add((t.GetConstructor(Type.EmptyTypes).Invoke(Type.EmptyTypes) as IEventHandler));
+						events_handlers.Add((t.GetConstructor(Type.EmptyTypes).Invoke(Type.EmptyTypes) as IEventHandler));
 					}
 				}
 			}
 			catch (Exception e) {
 				e.Display(MethodBase.GetCurrentMethod().ToString());
 			}
-			return eventsHandlers;
+			return events_handlers;
 		}
 	}
 }

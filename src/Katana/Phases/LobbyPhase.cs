@@ -17,6 +17,7 @@ namespace KatanaGame {
 			 */
 			Console.WriteLine("Initialised Lobby.");
 			Console.WriteLine("Game Master has been set.");
+			await this.Terminate( ); /* %DEBUG% */
 		}
 		public override async Task Event(KatanaGameEvent katana_event) {
 			if (this.Terminated) { return; }
@@ -24,8 +25,8 @@ namespace KatanaGame {
 			else if (katana_event is PlayerLeavesEvent player_leaves) { /* Remove player */ }
 			else if (katana_event is GameLaunchEvent game_launch) { }
 		}
-		protected override void Terminate( ) {
-			base.Terminate( );
+		public override async Task Terminate( ) {
+			await base.Terminate( );
 			Console.WriteLine("Lobby is now closed.");
 		}
 		protected override async Task ClearUp( ) {

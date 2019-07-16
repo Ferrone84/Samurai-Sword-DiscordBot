@@ -65,7 +65,7 @@ namespace KatanaGame {
 				{"shogun", new Role("Shogun", "Fait équipe avec les samurais.", "shogun", Role.StarRank.None)},
 			}
 		);
-		public KatanaGame() {
+		public KatanaGame( ) {
 			
 		}
 

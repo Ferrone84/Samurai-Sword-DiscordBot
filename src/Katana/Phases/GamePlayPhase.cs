@@ -35,7 +35,8 @@ namespace KatanaGame {
 				Console.WriteLine("Running player turn");
 				await this.player_turn.Run();
 				/* Change player, and let repeat */
-				Console.WriteLine("Next player");
+				if (this.GameInstance.GameOver) { await this.Terminate( ); }
+				else { Console.WriteLine("Next player"); }
 			}
 		}
 		public override async Task Event(KatanaGameEvent katana_event) {

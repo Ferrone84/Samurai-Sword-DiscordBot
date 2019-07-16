@@ -1,5 +1,5 @@
 namespace Games {
-	public interface IGame : IPhased {
+	public interface IGame {
 		string Name {get;}
 		string Description {get;}
 		string Rules {get;}

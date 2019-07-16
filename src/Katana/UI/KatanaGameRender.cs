@@ -38,7 +38,7 @@ namespace GameRendering {
 					{'-', (new Rectangle(757, 0, 38, 89), new Rectangle(759, 8, 34, 73))}
 			});
 			
-			var ProfileSize = new Size(width:176, height:384);
+			var profile_size = new Size(width:176, height:384);
 			var psize = new RelativeSize(64, 64);
 			// var Points = new ATypeWeWillNameProperly(
 			// 	types:new string[] {"honor", "resilience"},
@@ -99,7 +99,7 @@ namespace GameRendering {
 			 */
 		}
 		private void InitializeBlankProfile() {
-			var g = Graphics.FromImage(BLANK_PROFILE);
+			var g = Graphics.FromImage(this.BLANK_PROFILE);
 			g.CompositingMode = CompositingMode.SourceOver;
 
 			g.Compose(Resources.Assets.UI("back"), 16, 158)
@@ -119,7 +119,7 @@ namespace GameRendering {
 			// 	x:(i) => Stats.BASE_X,
 			// 	y:(i) => Stats.BASE_Y + i * Stats.SIZE
 			// );
-			BLANK_PROFILE.Save("blank.png", System.Drawing.Imaging.ImageFormat.Png);
+			this.BLANK_PROFILE.Save("blank.png", System.Drawing.Imaging.ImageFormat.Png);
 		}
 		private System.Drawing.Bitmap InitializePlayer(object game, ulong id) {
 			string lowercase_character = "chiyome"; /* %FIXME% dynamic argument */
@@ -129,7 +129,7 @@ namespace GameRendering {
 			var g = Graphics.FromImage(bmp);
 			g.CompositingMode = CompositingMode.SourceOver;
 			// g.Compose(Resources.Assets.UICharacter(lowercase_character), 0, 0);
-			g.Compose(BLANK_PROFILE, 0, 0);
+			g.Compose(this.BLANK_PROFILE, 0, 0);
 			System.Drawing.Bitmap digits = Resources.Assets.UI("DigitsBlueInWhite");
 
 			// Iter(STAT_TYPES,
