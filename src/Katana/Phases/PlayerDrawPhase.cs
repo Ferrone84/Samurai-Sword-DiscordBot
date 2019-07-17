@@ -4,8 +4,8 @@ using Games;
 using KatanaGame.Events;
 
 namespace KatanaGame {
-	internal class PlayerDrawPhase : APhase<KatanaGameInstance, KatanaGameEvent> {
-		public PlayerDrawPhase(KatanaGameInstance game_instance) : base(game_instance) { }
+	internal class PlayerDrawPhase : APhase<KatanaGameInstanceState, KatanaGameEvent> {
+		public PlayerDrawPhase(KatanaGameInstanceState game_state) : base(game_state) { }
 		protected override async Task Setup( ) {
 			/* if player can choose, let it choose, else, force */
 			await this.Terminate( );

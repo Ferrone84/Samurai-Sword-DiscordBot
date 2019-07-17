@@ -16,7 +16,7 @@ namespace KatanaGame {
 		public List<ICardModel> Characters { get; }
 		public List<ICardModel> Roles { get; }
 
-		public CardsManager(int playerNumber) {
+		public CardsManager(int player_number) {
 			Weapon bokken = new Weapon("bokken", $"{WEAPONS_DIR}bokken.jpg", 1, 1);
 			Weapon bo = new Weapon("bo", $"{WEAPONS_DIR}bo.jpg", 2, 1);
 			Weapon daikyu = new Weapon("daikyu", $"{WEAPONS_DIR}daikyu.jpg", 5, 2);
@@ -69,59 +69,59 @@ namespace KatanaGame {
 			Role shogun = new Role("shogun", $"{ROLES_DIR}shogun.jpg", "En équipe avec les samurais.", Role.StarRank.None);
 
 
-			Deck = new List<ICardModel>();
+			this.Deck = new List<ICardModel>();
 			//Actions
-			Register(parade, 15);
-			Register(geisha, 6);
-			Register(diversion, 5);
-			Register(ceremonie_du_the, 4);
-			Register(cri_de_guerre, 4);
-			Register(jujitsu, 3);
-			Register(meditation, 3);
-			Register(daimyo, 3);
+			this.Register(parade, 15);
+			this.Register(geisha, 6);
+			this.Register(diversion, 5);
+			this.Register(ceremonie_du_the, 4);
+			this.Register(cri_de_guerre, 4);
+			this.Register(jujitsu, 3);
+			this.Register(meditation, 3);
+			this.Register(daimyo, 3);
 
 			//Propriétés
-			Register(concentration, 6);
-			Register(armure, 4);
-			Register(attaque_rapide, 3);
-			Register(code_du_bushido, 2);
+			this.Register(concentration, 6);
+			this.Register(armure, 4);
+			this.Register(attaque_rapide, 3);
+			this.Register(code_du_bushido, 2);
 
 			//Armes
-			Register(bokken, 6);
-			Register(bo, 5);
-			Register(kiseru, 5);
-			Register(kusarigama, 4);
-			Register(shuriken, 3);
-			Register(naginata, 2);
-			Register(daikyu);
-			Register(kanabo);
-			Register(katana);
-			Register(nagayari);
-			Register(nodachi);
-			Register(tanegashima);
-			Register(wakizashi);
+			this.Register(bokken, 6);
+			this.Register(bo, 5);
+			this.Register(kiseru, 5);
+			this.Register(kusarigama, 4);
+			this.Register(shuriken, 3);
+			this.Register(naginata, 2);
+			this.Register(daikyu);
+			this.Register(kanabo);
+			this.Register(katana);
+			this.Register(nagayari);
+			this.Register(nodachi);
+			this.Register(tanegashima);
+			this.Register(wakizashi);
 
-			Characters = new List<ICardModel>() {
+			this.Characters = new List<ICardModel>() {
 				benkei, chiyome, ginchiyo, goemon, hanzo, hideyoshi, ieyasu, kojiro, musashi, nobunaga, tomoe, ushiwaka, rikyu
 			};
 
-			switch (playerNumber) {
+			switch (player_number) {
 				case 3:
-					Roles = new List<ICardModel>() { shogun, ninja1x, ninja2x }; //1 Shogun, 2 Ninja
+					this.Roles = new List<ICardModel>() { shogun, ninja1x, ninja2x }; //1 Shogun, 2 Ninja
 					break;
 				case 4:
-					Roles = new List<ICardModel>() { shogun, samurai };
-					Roles.AddRange(new List<ICardModel>() { ninja1x, ninja2x, ninja3x }.Shuffle().Pick(2)); //1 Shogun, 1 Samurai, 2 Ninja (remove from the game one of the 3 Ninjas at random, without looking at it)
+					this.Roles = new List<ICardModel>() { shogun, samurai };
+					this.Roles.AddRange(new List<ICardModel>() { ninja1x, ninja2x, ninja3x }.Shuffled().Picked(2)); //1 Shogun, 1 Samurai, 2 Ninja (remove from the game one of the 3 Ninjas at random, without looking at it)
 					break;
 				case 5:
-					Roles = new List<ICardModel>() { shogun, samurai, ronin}; //1 Shogun, 1 Samurai, 1 Ronin, 2 Ninja
-					Roles.AddRange(new List<ICardModel>() { ninja1x, ninja2x, ninja3x }.Shuffle().Pick(2));
+					this.Roles = new List<ICardModel>() { shogun, samurai, ronin}; //1 Shogun, 1 Samurai, 1 Ronin, 2 Ninja
+					this.Roles.AddRange(new List<ICardModel>() { ninja1x, ninja2x, ninja3x }.Shuffled().Picked(2));
 					break;
 				case 6:
-					Roles = new List<ICardModel>() { shogun, samurai, ronin, ninja1x, ninja2x, ninja3x }; //1 Shogun, 1 Samurai, 1 Ronin, 3 Ninja
+					this.Roles = new List<ICardModel>() { shogun, samurai, ronin, ninja1x, ninja2x, ninja3x }; //1 Shogun, 1 Samurai, 1 Ronin, 3 Ninja
 					break;
 				case 7:
-					Roles = new List<ICardModel>() { shogun, samurai1x, samurai2x, ronin, ninja1x, ninja2x, ninja3x }; //1 Shogun, 2 Samurai, 1 Ronin, 3 Ninja
+					this.Roles = new List<ICardModel>() { shogun, samurai1x, samurai2x, ronin, ninja1x, ninja2x, ninja3x }; //1 Shogun, 2 Samurai, 1 Ronin, 3 Ninja
 					break;
 			}
 		}

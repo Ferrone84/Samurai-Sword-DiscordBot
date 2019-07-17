@@ -4,8 +4,8 @@ using Games;
 using KatanaGame.Events;
 
 namespace KatanaGame {
-	internal class PlayerBushidoPhase : APhase<KatanaGameInstance, KatanaGameEvent> {
-		public PlayerBushidoPhase(KatanaGameInstance game_instance) : base(game_instance) { }
+	internal class PlayerBushidoPhase : APhase<KatanaGameInstanceState, KatanaGameEvent> {
+		public PlayerBushidoPhase(KatanaGameInstanceState game_state) : base(game_state) { }
 		protected override async Task Proceed( ) {
 			/* if (no bushido) */
 			if (new Random( ).Next(16) != 0) {
@@ -30,8 +30,8 @@ namespace KatanaGame {
 					/* discard bushido card */
 					/* ** Report honor point lost, report bushido victim ** */
 					/* ** If bushido causes loss of last honor point, report game end because of bushido ** */
-					this.GameInstance.GameOver |= (new Random( ).Next(16) == 0);
-					if (this.GameInstance.GameOver) { Console.WriteLine("It was its last point, how sad."); }
+					this.GameState.GameOver |= (new Random( ).Next(16) == 0);
+					if (this.GameState.GameOver) { Console.WriteLine("It was its last point, how sad."); }
 				}
 			}
 			/* else */

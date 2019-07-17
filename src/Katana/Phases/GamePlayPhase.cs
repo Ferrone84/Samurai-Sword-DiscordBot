@@ -4,10 +4,10 @@ using Games;
 using KatanaGame.Events;
 
 namespace KatanaGame {
-	internal class GamePlayPhase : APhase<KatanaGameInstance, KatanaGameEvent> {
+	internal class GamePlayPhase : APhase<KatanaGameInstanceState, KatanaGameEvent> {
 		private readonly PlayerTurn player_turn;
-		public GamePlayPhase(KatanaGameInstance game_instance) : base(game_instance) {
-			this.player_turn = new PlayerTurn(game_instance);
+		public GamePlayPhase(KatanaGameInstanceState game_state) : base(game_state) {
+			this.player_turn = new PlayerTurn(game_state);
 		}
 		protected override async Task Setup( ) {
 			/* %TODO% */
@@ -28,6 +28,7 @@ namespace KatanaGame {
 			/* Place players in the loop */
 			Console.WriteLine("Players placed");
 			/* Give cards (Shuffle, then pick amount 4-5-5-6-6-7-7) */
+			this.GameState.DrawDeck.Shuffle( );
 			Console.WriteLine("Deck shuffled");
 		}
 		protected override async Task Proceed( ) {
@@ -35,7 +36,7 @@ namespace KatanaGame {
 				Console.WriteLine("Running player turn");
 				await this.player_turn.Run();
 				/* Change player, and let repeat */
-				if (this.GameInstance.GameOver) { await this.Terminate( ); }
+				if (this.GameState.GameOver) { await this.Terminate( ); }
 				else { Console.WriteLine("Next player"); }
 			}
 		}

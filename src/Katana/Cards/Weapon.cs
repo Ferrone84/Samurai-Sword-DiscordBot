@@ -1,5 +1,5 @@
-namespace KatanaGame {
-	public sealed class Weapon : KatanaPlayingCardModel {
+namespace KatanaGame.Cards {
+	public sealed class Weapon : AKatanaPlayingCardModel {
 		public short Range { get; }
 		public short Damage { get; }
 		private static string GenerateDescription(short range, short damage) {

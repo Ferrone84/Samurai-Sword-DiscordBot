@@ -1,5 +1,5 @@
-namespace KatanaGame {
-	public sealed class Role : KatanaCardModel {
+namespace KatanaGame.Cards {
+	public sealed class Role : AKatanaCardModel {
 		public enum StarRank : short {
 			None = 0,
 			One = 1,

@@ -1,5 +1,5 @@
-namespace KatanaGame {
-	public sealed class Character : KatanaCardModel {
+namespace KatanaGame.Cards {
+	public sealed class Character : AKatanaCardModel {
 		public short Resilience { get; }
 
 		public Character(string name, string description, string picture, short resilience) : base(name:name, description:description, picture:picture) {

@@ -4,8 +4,8 @@ using Games;
 using KatanaGame.Events;
 
 namespace KatanaGame {
-	internal class LobbyPhase : APhase<KatanaGameInstance, KatanaGameEvent> {
-		public LobbyPhase(KatanaGameInstance game_instance) : base(game_instance) { }
+	internal class LobbyPhase : APhase<KatanaGameInstanceState, KatanaGameEvent> {
+		public LobbyPhase(KatanaGameInstanceState game_state) : base(game_state) { }
 		protected override async Task Setup( ) {
 			/*
 			 * Initialize lobby

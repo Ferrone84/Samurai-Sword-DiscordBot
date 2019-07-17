@@ -30,12 +30,12 @@ namespace Games {
 			await base.Terminate( );
 		}
 	}
-	abstract class APhasedPhase<TGameInstance, TEvent> : APhase<TGameInstance, TEvent> {
+	abstract class APhasedPhase<TGameState, TEvent> : APhase<TGameState, TEvent> {
 		private IEnumerable<IPhase> phases;
 		private IPhase current_phase;
 		protected IPhase CurrentPhase { get => this.current_phase; }
 
-		public APhasedPhase(TGameInstance game_instance, params IPhase[] phases) : base (game_instance) {
+		public APhasedPhase(TGameState game_instance, params IPhase[] phases) : base (game_instance) {
 			this.phases = phases;
 			this.current_phase = null;
 		}

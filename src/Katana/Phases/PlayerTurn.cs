@@ -3,16 +3,16 @@ using Games;
 using KatanaGame.Events;
 
 namespace KatanaGame {
-	internal class PlayerTurn : APhasedPhase<KatanaGameInstance, KatanaGameEvent> {
-		public PlayerTurn(KatanaGameInstance game_instance) : base(game_instance,
-			new PlayerRecoveryPhase(game_instance),
-			new PlayerBushidoPhase(game_instance),
-			new PlayerDrawPhase(game_instance),
-			new PlayerPlayPhase(game_instance),
-			new PlayerDiscardPhase(game_instance)
+	internal class PlayerTurn : APhasedPhase<KatanaGameInstanceState, KatanaGameEvent> {
+		public PlayerTurn(KatanaGameInstanceState game_state) : base(game_state,
+			new PlayerRecoveryPhase(game_state),
+			new PlayerBushidoPhase(game_state),
+			new PlayerDrawPhase(game_state),
+			new PlayerPlayPhase(game_state),
+			new PlayerDiscardPhase(game_state)
 		) { }
 		protected override async Task<bool> CheckForPrematureTermination( ) {
-			return this.GameInstance.GameOver;
+			return this.GameState.GameOver;
 		}
 		public override async Task Event(KatanaGameEvent katana_event) {
 			if (katana_event is CharacterDiedEvent character_died) { }

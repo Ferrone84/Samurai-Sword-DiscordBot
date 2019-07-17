@@ -4,8 +4,8 @@ using Games;
 using KatanaGame.Events;
 
 namespace KatanaGame {
-	internal class PlayerPlayPhase : APhase<KatanaGameInstance, KatanaGameEvent> {
-		public PlayerPlayPhase(KatanaGameInstance game_instance) : base(game_instance) { }
+	internal class PlayerPlayPhase : APhase<KatanaGameInstanceState, KatanaGameEvent> {
+		public PlayerPlayPhase(KatanaGameInstanceState game_state) : base(game_state) { }
 		protected override async Task Setup( ) {
 			Console.WriteLine("Now play cards as you wish");
 		}
@@ -17,7 +17,7 @@ namespace KatanaGame {
 			 */
 			if (new Random( ).Next(128) == 0) {
 				Console.WriteLine("Someone has no more honor points, ending game.");
-				this.GameInstance.GameOver = true;
+				this.GameState.GameOver = true;
 			}
 			await this.Terminate( ); /* %DEBUG% */
 			await base.Proceed( );

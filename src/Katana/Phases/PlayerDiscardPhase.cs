@@ -4,8 +4,8 @@ using Games;
 using KatanaGame.Events;
 
 namespace KatanaGame {
-	internal class PlayerDiscardPhase : APhase<KatanaGameInstance, KatanaGameEvent> {
-		public PlayerDiscardPhase(KatanaGameInstance game_instance) : base(game_instance) { }
+	internal class PlayerDiscardPhase : APhase<KatanaGameInstanceState, KatanaGameEvent> {
+		public PlayerDiscardPhase(KatanaGameInstanceState game_state) : base(game_state) { }
 		protected override async Task Setup( ) {
 			/* I player has more than 7 cards, warn it has to discard some */
 			Console.WriteLine("Do you have more than 7 cards in hand?");

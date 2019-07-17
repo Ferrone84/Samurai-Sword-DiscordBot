@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 
 namespace Games {
-	abstract class APhase< TEvent> : IPhase<TEvent> {
+	abstract class APhase<TEvent> : IPhase<TEvent> {
 		private CancellationTokenSource running;
 		protected bool Terminated { get => this.running.IsCancellationRequested; }
 		public APhase( ) { }
@@ -21,10 +21,10 @@ namespace Games {
 		public virtual async Task Terminate( ) { this.running.Cancel( ); /* Should be overridden to handle complex cases of phase interruption */ }
 		protected virtual async Task ClearUp( ) { }
 	}
-	abstract class APhase<TGameInstance, TEvent> : APhase<TEvent> {
-		protected TGameInstance GameInstance { get; }
-		public APhase(TGameInstance game_instance) {
-			this.GameInstance = game_instance;
+	abstract class APhase<TGameState, TEvent> : APhase<TEvent> {
+		protected TGameState GameState { get; }
+		public APhase(TGameState game_state) {
+			this.GameState = game_state;
 		}
 	}
 }

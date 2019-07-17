@@ -2,16 +2,17 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Games.Cards;
+using KatanaGame.Cards;
 
 using CollectionExtensions;
 
 namespace KatanaGame {
 	public class KatanaPlayer : IHandedPlayer /* %TODO%, IBoardedPlayer*/ {
-		public struct StatValues {
+		public class StatValues {
 			public int Base;
 			public int Bonus;
 		}
-		public struct StatsValues {
+		public class StatsValues {
 			public StatValues Armor;
 			public StatValues Weapons;
 			public StatValues Damage;
@@ -24,13 +25,13 @@ namespace KatanaGame {
 		public int Honor { get; }
 		public int Resilience { get; }
 		public StatsValues Stats { get; }
-		private readonly IEnumerable<ICardCopy> _hand;
-		public IEnumerable<ICardCopy> Hand { get =>this._hand.AsEnumerable(); }
-		public KatanaPlayer() {
+		IEnumerable<ICardCopy> IHandedPlayer.Hand { get => this.Hand; }
+		internal IEnumerable<ICardCopy<AKatanaPlayingCardModel>> Hand { get; }
+		public KatanaPlayer( ) {
 			/* Global  */
-			this.Name = "MockChiyome";
-			this.Role = new Role("Shogun", "Le shogun", "shogun", Role.StarRank.Two);
-			this.Character = new Character("Chiyome", "Nope", "chiyome", 5);
+			this.Name = "";
+			this.Role = null;
+			this.Character = null;
 			/* State */
 			this.Honor = 4;
 			this.Resilience = this.Character.Resilience;
@@ -41,9 +42,9 @@ namespace KatanaGame {
 			s.Weapons.Bonus = 0;
 			s.Damage.Base = 1;
 			s.Damage.Bonus = 18;
-			this.Stats = s;
+			this.Stats = default(StatsValues);
 
-			this._hand = new List<ICardCopy>();
+			this.Hand = new List<ICardCopy<AKatanaPlayingCardModel>>();
 			/* Note this is a mock */
 		}
 	}
